@@ -1,0 +1,5 @@
+<resources>
+    <style name="CustomCardShape" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+
+    </style>
+</resources>

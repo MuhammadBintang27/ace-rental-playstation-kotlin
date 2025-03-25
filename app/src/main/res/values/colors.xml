@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Warna Utama -->
+    <color name="primary_background_dark">#173054</color>
+    <color name="secondary_background_dark">#284062</color>
+
+    <!-- Warna Card dan Input -->
+    <color name="card_background">#f3f4f4</color>
+    <color name="input_background">#e5ecee</color>
+    <color name="input_border">#4A9DC4</color>
+
+    <!-- Warna Teks -->
+    <color name="text_primary_dark">#424d58</color>
+    <color name="text_secondary">#4A9DC4</color>
+
+    <!-- Warna Tombol -->
+    <color name="button_background">#5aa6b3</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="black">#000000</color>
+    <color name="teal_200">#03DAC5</color>x
+</resources>
