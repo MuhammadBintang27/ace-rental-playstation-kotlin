@@ -2,12 +2,14 @@
 <resources>
     <!-- Warna Utama -->
     <color name="primary_background_dark">#173054</color>
-    <color name="secondary_background_dark">#284062</color>
+    <color name="secondary_background_dark">#E6000000</color>
 
     <!-- Warna Card dan Input -->
     <color name="card_background">#f3f4f4</color>
-    <color name="input_background">#e5ecee</color>
-    <color name="input_border">#4A9DC4</color>
+    <color name="input_background">#21FFFFFF</color>
+    <color name="input_stroke">#FFFFFF</color> <!-- 40% opacity -->
+    <color name="hint_text">#99FFFFFF</color> <!-- 60% opacity -->
+
 
     <!-- Warna Teks -->
     <color name="text_primary_dark">#424d58</color>

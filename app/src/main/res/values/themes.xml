@@ -11,8 +11,8 @@
 <!--        <item name="colorSecondaryVariant">@color/green_variant</item>-->
 <!--        <item name="colorOnSecondary">@color/white</item>-->
 
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+         Status bar color.
+        <item name="android:statusBarColor">@color/secondary_background_dark</item>
     </style>
 
     <style name="Theme.AceRentalPlaystation.NoActionBar">

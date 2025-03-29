@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/playstationFragment">
+
+    <fragment
+        android:id="@+id/playstationFragment"
+        android:name="com.ace.playstation.ui.status_playstation.PlayStationFragment"
+        android:label="PlayStationFragment">
+        <action
+            android:id="@+id/action_playstationFragment_to_playstationDetailFragment"
+            app:destination="@id/playstationDetailFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/playstationDetailFragment"
+        android:name="com.ace.playstation.ui.status_playstation.PlaystationDetailFragment"
+        android:label="PlaystationDetailFragment">
+        <argument
+            android:name="unit_id"
+            app:argType="integer"/>
+        <argument
+            android:name="nomor_unit"
+            app:argType="string"/>
+        <argument
+            android:name="status"
+            app:argType="string"/>
+        <argument
+            android:name="tipe_main"
+            app:argType="string"/>
+        <argument
+            android:name="waktu_mulai"
+            app:argType="string"/>
+        <argument
+            android:name="waktu_selesai"
+            app:argType="string"/>
+    </fragment>
+</navigation>

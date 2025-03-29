@@ -12,14 +12,45 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.ace.playstation.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_playstation"
+        android:name="com.ace.playstation.ui.status_playstation.PlayStationFragment"
+        android:label="@string/menu_playstation"
+        tools:layout="@layout/fragment_playstation">
+        <!-- Tambahkan action ke detail fragment -->
+        <action
+            android:id="@+id/action_nav_playstation_to_playstationDetailFragment"
+            app:destination="@id/playstationDetailFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.ace.playstation.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <!-- Tambahkan fragment detail -->
+    <fragment
+        android:id="@+id/playstationDetailFragment"
+        android:name="com.ace.playstation.ui.status_playstation.PlaystationDetailFragment"
+        android:label="PlaystationDetailFragment">
+        <argument
+            android:name="unit_id"
+            app:argType="integer"/>
+        <argument
+            android:name="nomor_unit"
+            app:argType="string"/>
+        <argument
+            android:name="status"
+            app:argType="string"/>
+        <argument
+            android:name="tipe_main"
+            app:argType="string"/>
+        <argument
+            android:name="waktu_mulai"
+            app:argType="string"/>
+        <argument
+            android:name="waktu_selesai"
+            app:argType="string"/>
+    </fragment>
+
 </navigation>
