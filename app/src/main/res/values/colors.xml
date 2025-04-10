@@ -10,7 +10,7 @@
     <color name="input_stroke">#FFFFFF</color> <!-- 40% opacity -->
     <color name="hint_text">#99FFFFFF</color> <!-- 60% opacity -->
 
-
+    <color name="purple_selected">#5E2B8C</color>
     <!-- Warna Teks -->
     <color name="text_primary_dark">#424d58</color>
     <color name="text_secondary">#4A9DC4</color>
@@ -21,5 +21,15 @@
     <color name="purple_200">#BB86FC</color>
     <color name="purple_700">#3700B3</color>
     <color name="black">#000000</color>
-    <color name="teal_200">#03DAC5</color>x
+    <color name="teal_200">#03DAC5</color>
+    <!-- Status Colors -->
+    <color name="available_green">#4CAF50</color>
+    <color name="in_use_orange">#FF5722</color>
+    <color name="gray">#757575</color>
+
+    <!-- Transaction Type Colors -->
+    <color name="rental_blue">#2196F3</color>
+    <color name="food_yellow">#FFC107</color>
+    <color name="drink_cyan">#00BCD4</color>
+    <color name="product_green">#4CAF50</color>
 </resources>

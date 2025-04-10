@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#DD1E112F"/> <!-- Warna latar belakang -->
+            <corners android:radius="20dp"/> <!-- Sudut membulat -->
+            <padding android:left="16dp" android:right="16dp" android:top="8dp" android:bottom="8dp"/>
+            <shadowColor android:color="#80000000"/> <!-- Efek shadow -->
+        </shape>
+    </item>
+
+    <item>
+        <shape android:shape="rectangle">
+        </shape>
+    </item>
+</selector>

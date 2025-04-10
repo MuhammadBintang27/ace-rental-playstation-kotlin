@@ -18,6 +18,8 @@ navigationFragmentKtx = "2.8.8"
 navigationUiKtx = "2.8.8"
 foundationAndroid = "1.7.8"
 playServicesAuth = "21.3.0"
+roomKtx = "2.6.1"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version = "v3.1.0" }
@@ -36,6 +38,8 @@ androidx-foundation-android = { group = "androidx.compose.foundation", name = "f
 play-services-auth = { group = "com.google.android.gms", name = "play-services-auth", version.ref = "playServicesAuth" }
 postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "bom" }
 storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "bom" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

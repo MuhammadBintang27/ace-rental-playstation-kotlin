@@ -8,13 +8,13 @@
     <fragment
         android:id="@+id/nav_home"
         android:name="com.ace.playstation.ui.home.HomeFragment"
-        android:label="@string/menu_home"
+        android:label="Beranda"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_playstation"
         android:name="com.ace.playstation.ui.status_playstation.PlayStationFragment"
-        android:label="@string/menu_playstation"
+        android:label="Sewa PS"
         tools:layout="@layout/fragment_playstation">
         <!-- Tambahkan action ke detail fragment -->
         <action
@@ -23,10 +23,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.ace.playstation.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_penjualan"
+        android:name="com.ace.playstation.ui.transaksi_penjualan.PenjualanFragment.PenjualanFragment"
+        android:label="Pesan Snack"
+        tools:layout="@layout/fragment_penjualan" />
+    <fragment
+        android:id="@+id/nav_riwayat"
+        android:name="com.ace.playstation.ui.riwayat_transaksi.TransactionHistoryFragment"
+        android:label="Histori Transaksi"
+        tools:layout="@layout/fragment_transaction_history" />
 
     <!-- Tambahkan fragment detail -->
     <fragment

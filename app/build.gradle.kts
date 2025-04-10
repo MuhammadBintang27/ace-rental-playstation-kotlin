@@ -56,6 +56,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.swiperefreshlayout)
     val ktorVersion = "3.1.0"
     val hiltVersion = "1.1.0"
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")

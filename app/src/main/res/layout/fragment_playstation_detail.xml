@@ -6,6 +6,17 @@
     android:orientation="vertical"
     android:background="@drawable/gradient_background"
     android:padding="16dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/tvNomorUnit"
+        android:layout_height="wrap_content"
+        android:text="PS-1"
+        android:textSize="24sp"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginBottom="16dp"/>
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,7 +24,7 @@
         android:layout_margin="16dp"
         app:cardCornerRadius="16dp"
         app:cardBackgroundColor="@android:color/transparent"
-        app:cardElevation="8dp">
+        app:cardElevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,38 +37,50 @@
                 android:id="@+id/tvStatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Status: Menunggu"
-                android:textSize="18sp"
+                android:text="Status"
+                android:textSize="20sp"
+                android:gravity="center_horizontal"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:paddingBottom="6dp"/>
+                android:paddingBottom="10dp"/>
+
             <TextView
-                android:id="@+id/tvNomorUnit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="1"
+                android:text="Waktu Mulai"
                 android:textSize="18sp"
-                android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:paddingBottom="6dp"/>
-
+                android:textColor="@color/input_stroke"
+                android:paddingBottom="4dp"/>
             <TextView
                 android:id="@+id/tvWaktuMulai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Mulai: -"
-                android:textSize="16sp"
+                android:text=""
+                android:textSize="14sp"
+                android:background="@drawable/card_bg"
+                android:padding="10dp"
                 android:textColor="@android:color/white"
+                android:layout_marginBottom="10dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Waktu Selesai"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/input_stroke"
                 android:paddingBottom="4dp"/>
-
             <TextView
                 android:id="@+id/tvWaktuSelesai"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Selesai: -"
+                android:text=""
                 android:textSize="16sp"
+                android:padding="10dp"
                 android:textColor="@android:color/white"
-                android:paddingBottom="12dp"/>
+                android:background="@drawable/card_bg"
+                android:layout_marginBottom="10dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -72,9 +95,12 @@
                 android:id="@+id/spinnerTipeMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@drawable/card_bg"
                 android:padding="10dp"
-                android:layout_marginBottom="10dp"/>
+                android:layout_marginBottom="10dp"
+                android:popupBackground="@color/black"
+                android:textColor="@android:color/white"/>
+
 
             <EditText
                 android:id="@+id/etJumlahMenit"
@@ -82,7 +108,9 @@
                 android:layout_height="wrap_content"
                 android:hint="Masukkan jumlah menit"
                 android:inputType="number"
-                android:background="@android:color/white"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:background="@drawable/card_bg"
                 android:padding="10dp"
                 android:layout_marginBottom="18dp"
                 android:visibility="gone"

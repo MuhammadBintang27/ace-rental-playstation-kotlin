@@ -16,14 +16,15 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.ace.playstation.R
-import com.ace.playstation.data.model.TransaksiRental
 import com.ace.playstation.data.repository.PlayStationRepository
+import com.ace.playstation.model.TransaksiRental
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 
 class PlaystationDetailFragment : Fragment() {
     private val playStationRepository = PlayStationRepository()
@@ -47,9 +48,17 @@ class PlaystationDetailFragment : Fragment() {
 
     private val tipePermainanArray = arrayOf("Tetap", "Personal")
 
-    private val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault())
-    private val sqlDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-    private val displayFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+    // Use a consistent timezone across all formatters
+    private val timeZone = TimeZone.getDefault()
+    private val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.getDefault()).apply {
+        this.timeZone = timeZone
+    }
+    private val sqlDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).apply {
+        this.timeZone = timeZone
+    }
+    private val displayFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).apply {
+        this.timeZone = timeZone
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -129,15 +138,17 @@ class PlaystationDetailFragment : Fragment() {
                 }
             }
 
+            // Always return in ISO format with the correct timezone
             parsedDate?.let { isoDateFormat.format(it) } ?: ""
         } catch (e: Exception) {
+            Log.e("PlaystationDetail", "Error parsing date: $timeString", e)
             ""
         }
     }
 
     private fun setupSpinners() {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, tipePermainanArray)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, tipePermainanArray)
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinnerTipeMain.adapter = adapter
 
         val currentTipeIndex = tipePermainanArray.indexOfFirst { it == tipePermainan }
@@ -147,8 +158,8 @@ class PlaystationDetailFragment : Fragment() {
     }
 
     private fun updateUI() {
-        tvStatus.text = "Status: $statusPlaystation"
-        tvNomorUnit.text = "Nomor Unit: $nomorUnit"
+        tvStatus.text = "$statusPlaystation"
+        tvNomorUnit.text = "$nomorUnit"
 
         when (statusPlaystation) {
             "Available" -> {
@@ -157,8 +168,8 @@ class PlaystationDetailFragment : Fragment() {
                 spinnerTipeMain.isEnabled = true
                 etJumlahMenit.visibility = if (spinnerTipeMain.selectedItem.toString() == "Tetap") View.VISIBLE else View.GONE
 
-                tvWaktuMulai.text = "Mulai: -"
-                tvWaktuSelesai.text = "Selesai: -"
+                tvWaktuMulai.text = ""
+                tvWaktuSelesai.text = ""
             }
             "Rented" -> {
                 btnMulaiPermainan.visibility = View.GONE
@@ -169,24 +180,24 @@ class PlaystationDetailFragment : Fragment() {
                 when (tipePermainan) {
                     "Tetap" -> {
                         if (waktuMulai.isNotEmpty()) {
-                            tvWaktuMulai.text = "Mulai: ${formatTimeString(waktuMulai)}"
+                            tvWaktuMulai.text = "${formatTimeString(waktuMulai)}"
                         }
                         if (waktuSelesai.isNotEmpty()) {
-                            tvWaktuSelesai.text = "Selesai: ${formatTimeString(waktuSelesai)}"
+                            tvWaktuSelesai.text = "${formatTimeString(waktuSelesai)}"
                         } else if (waktuMulai.isNotEmpty() && jumlahMenit > 0) {
                             val waktuMulaiDate = isoDateFormat.parse(waktuMulai)
                             val waktuSelesaiCalc = waktuMulaiDate?.time?.plus(jumlahMenit * 60 * 1000)
                             if (waktuSelesaiCalc != null) {
                                 val calculatedWaktuSelesai = isoDateFormat.format(Date(waktuSelesaiCalc))
-                                tvWaktuSelesai.text = "Selesai: ${formatTimeString(calculatedWaktuSelesai)}"
+                                tvWaktuSelesai.text = "${formatTimeString(calculatedWaktuSelesai)}"
                             }
                         }
                     }
                     "Personal" -> {
                         if (waktuMulai.isNotEmpty()) {
-                            tvWaktuMulai.text = "Mulai: ${formatTimeString(waktuMulai)}"
+                            tvWaktuMulai.text = "${formatTimeString(waktuMulai)}"
                         }
-                        tvWaktuSelesai.text = "Selesai: -"
+                        tvWaktuSelesai.text = ""
                     }
                 }
             }
@@ -203,7 +214,9 @@ class PlaystationDetailFragment : Fragment() {
             jumlahMenit = menitInput
         }
 
-        waktuMulai = isoDateFormat.format(Date())
+        // Use current time with explicit timezone handling
+        val now = Date()
+        waktuMulai = isoDateFormat.format(now)
 
         val waktuSelesaiFormatted = if (spinnerTipeMain.selectedItem.toString() == "Tetap") {
             val waktuMulaiDate = isoDateFormat.parse(waktuMulai)
@@ -224,14 +237,8 @@ class PlaystationDetailFragment : Fragment() {
             if (success) {
                 Log.d("Playstation", "Data berhasil diperbarui")
                 statusPlaystation = "Rented"
-                arguments = Bundle().apply {
-                    putInt("unit_id", unitId)
-                    putString("nomor_unit", nomorUnit)
-                    putString("status", "Rented")
-                    putString("tipe_main", spinnerTipeMain.selectedItem.toString())
-                    putString("waktu_mulai", waktuMulai)
-                    putString("waktu_selesai", waktuSelesaiFormatted ?: "")
-                }
+                tipePermainan = spinnerTipeMain.selectedItem.toString()
+                waktuSelesai = waktuSelesaiFormatted ?: ""
                 updateUI()
             } else {
                 Log.e("Playstation", "Gagal memperbarui data")
@@ -242,20 +249,24 @@ class PlaystationDetailFragment : Fragment() {
 
     private fun endGame() {
         try {
+            // Ensure consistent timezone handling
             val waktuPerhitungan: Date? = when {
                 tipePermainan == "Tetap" && waktuSelesai.isNotEmpty() -> isoDateFormat.parse(waktuSelesai)
-                else -> Date()
+                else -> Date() // Current time
             }
 
-            val waktuMulaiDate: Date? = try {
-                when {
-                    waktuMulai.isNotEmpty() && waktuMulai.contains('T') -> isoDateFormat.parse(waktuMulai)
-                    waktuMulai.isNotEmpty() -> sqlDateFormat.parse(waktuMulai)
-                    else -> null
+            val waktuMulaiDate: Date? = if (waktuMulai.isNotEmpty()) {
+                try {
+                    isoDateFormat.parse(waktuMulai)
+                } catch (e: ParseException) {
+                    try {
+                        sqlDateFormat.parse(waktuMulai)
+                    } catch (e: ParseException) {
+                        Log.e("PlaystationDetail", "Failed to parse start time: $waktuMulai", e)
+                        null
+                    }
                 }
-            } catch (e: ParseException) {
-                null
-            }
+            } else null
 
             val durasiMenit = if (waktuMulaiDate != null && waktuPerhitungan != null) {
                 ((waktuPerhitungan.time - waktuMulaiDate.time) / (1000 * 60)).toInt()
@@ -294,11 +305,17 @@ class PlaystationDetailFragment : Fragment() {
             val parsedDate = try {
                 isoDateFormat.parse(timeString)
             } catch (e: ParseException) {
-                sqlDateFormat.parse(timeString)
+                try {
+                    sqlDateFormat.parse(timeString)
+                } catch (e: ParseException) {
+                    Log.e("PlaystationDetail", "Failed to format time: $timeString", e)
+                    null
+                }
             }
 
-            displayFormat.format(parsedDate ?: Date())
+            parsedDate?.let { displayFormat.format(it) } ?: timeString
         } catch (e: Exception) {
+            Log.e("PlaystationDetail", "Error formatting time: $timeString", e)
             timeString
         }
     }
@@ -306,6 +323,8 @@ class PlaystationDetailFragment : Fragment() {
     private fun showHargaDialog(durasiMenit: Int, totalHarga: Int, waktuMulai: Date?, waktuSelesai: Date?, onDismiss: () -> Unit = {}) {
         val currencyFormatter = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
         val formattedHarga = currencyFormatter.format(totalHarga)
+
+        // Format display strings consistently
         val waktuMulaiStr = waktuMulai?.let { isoDateFormat.format(it) } ?: "-"
         val waktuSelesaiStr = waktuSelesai?.let { isoDateFormat.format(it) } ?: "-"
 
@@ -341,5 +360,4 @@ class PlaystationDetailFragment : Fragment() {
             .create()
             .show()
     }
-
 }

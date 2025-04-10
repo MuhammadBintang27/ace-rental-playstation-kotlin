@@ -32,9 +32,10 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_home, R.id.nav_playstation, R.id.nav_slideshow), drawerLayout
+            setOf(R.id.nav_home, R.id.nav_playstation, R.id.nav_penjualan, R.id.nav_riwayat), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.itemIconTintList = null
         navView.setupWithNavController(navController)
 
         // Menangani klik item pada Navigation Drawer

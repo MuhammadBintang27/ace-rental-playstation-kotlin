@@ -61,11 +61,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="60dp"
-                    android:hint="Enter your email"
                     android:inputType="textEmailAddress"
                     android:padding="12dp"
                     android:background="@drawable/rounded_form"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:hint="Enter your email"
+                    android:textColorHint="@color/input_stroke"
+                    android:textColor="@color/input_stroke" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -86,12 +88,14 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passwordInput"
+                    android:textColor="@color/input_stroke"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="60dp"
                     android:hint="Enter your password"
                     android:inputType="textPassword"
                     android:padding="12dp"
+                    android:textColorHint="@color/input_stroke"
                     android:background="@drawable/rounded_form"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -135,6 +139,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginButton"
+                app:backgroundTint="@null"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

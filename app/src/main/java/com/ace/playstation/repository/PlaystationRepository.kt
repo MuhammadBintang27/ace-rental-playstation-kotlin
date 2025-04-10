@@ -3,7 +3,7 @@ package com.ace.playstation.data.repository
 import PlayStation
 import android.util.Log
 import com.ace.playstation.auth.SupabaseClientInstance
-import com.ace.playstation.data.model.TransaksiRental
+import com.ace.playstation.model.TransaksiRental
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

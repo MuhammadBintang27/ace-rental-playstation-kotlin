@@ -1,4 +1,4 @@
-package com.ace.playstation.data.model // Tambahkan deklarasi package
+package com.ace.playstation.model // Tambahkan deklarasi package
 
 import kotlinx.serialization.Serializable
 
