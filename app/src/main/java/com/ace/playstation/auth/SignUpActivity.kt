@@ -5,12 +5,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import com.ace.playstation.R
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.ace.playstation.R
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.auth.auth
 import io.github.jan.supabase.auth.providers.builtin.Email
@@ -103,6 +103,7 @@ class SignupActivity : AppCompatActivity() {
                 val result = supabase.auth.signUpWith(Email) {
                     this.email = email
                     this.password = password
+
                 }
 
                 runOnUiThread {

@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ace.playstation.R
+import com.ace.playstation.adapter.TransactionHistoryAdapter
 import com.ace.playstation.databinding.FragmentTransactionHistoryBinding
 import com.ace.playstation.model.TransactionItem
+import com.ace.playstation.repository.TransactionRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -57,7 +59,7 @@ class TransactionHistoryFragment : Fragment() {
 
     private fun setupFilterSpinner() {
         // Time filter setup
-        val timeFilterOptions = arrayOf("Hari Ini", "Minggu Ini", "Bulan Ini", "Tahun Ini", "Kustom")
+        val timeFilterOptions = arrayOf("Semua", "Hari Ini", "Minggu Ini", "Bulan Ini", "Tahun Ini", "Kustom")
         val timeSpinnerAdapter = ArrayAdapter(requireContext(),
             R.layout.spinner_item, // Teks putih
             timeFilterOptions)
@@ -67,11 +69,12 @@ class TransactionHistoryFragment : Fragment() {
         binding.spinnerTimeFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when (position) {
-                    0 -> applyCurrentFilters("today")
-                    1 -> applyCurrentFilters("week")
-                    2 -> applyCurrentFilters("month")
-                    3 -> applyCurrentFilters("year")
-                    4 -> binding.datePickerLayout.visibility = View.VISIBLE
+                    0 -> applyCurrentFilters("all") // Semua
+                    1 -> applyCurrentFilters("today")
+                    2 -> applyCurrentFilters("week")
+                    3 -> applyCurrentFilters("month")
+                    4 -> applyCurrentFilters("year")
+                    5 -> binding.datePickerLayout.visibility = View.VISIBLE
                 }
             }
 

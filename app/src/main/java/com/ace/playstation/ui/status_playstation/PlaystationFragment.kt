@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.ace.playstation.R
+import com.ace.playstation.adapter.PlayStationAdapter
 import com.ace.playstation.databinding.FragmentPlaystationBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ace.playstation.R
+import com.ace.playstation.adapter.KonfirmasiAdapter
+import com.ace.playstation.adapter.PenjualanAdapter
 import com.ace.playstation.databinding.FragmentPenjualanBinding
-import com.ace.playstation.ui.transaksi_penjualan.KonfirmasiAdapter.KonfirmasiAdapter
-import com.ace.playstation.ui.transaksi_penjualan.PenjualanAdapter.PenjualanAdapter
 import com.ace.playstation.ui.transaksi_penjualan.TransaksiPenjualanViewModel.PenjualanViewModel
 
 class PenjualanFragment : Fragment() {

@@ -9,8 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ace.playstation.adapter.PlayStationUnitAdapter
+import com.ace.playstation.adapter.RecentTransactionAdapter
 import com.ace.playstation.databinding.FragmentHomeBinding
-import com.ace.playstation.ui.adapters.RecentTransactionAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.ace.playstation.ui.riwayat_transaksi
+package com.ace.playstation.repository
 
 import android.util.Log
 import com.ace.playstation.auth.SupabaseClientInstance
@@ -68,7 +68,18 @@ class TransactionRepository {
                 }
             }
 
-            Result.success(transactionItems)
+            // Sort transactions by datetime (newest first)
+            val sortedItems = transactionItems.sortedByDescending {
+                try {
+                    val inputFormat = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault())
+                    inputFormat.parse(it.datetime) ?: Date(0)
+                } catch (e: Exception) {
+                    Log.e("TransactionRepo", "Error parsing date for sorting: ${it.datetime}", e)
+                    Date(0)
+                }
+            }
+
+            Result.success(sortedItems)
         } catch (e: Exception) {
             Log.e("TransactionRepo", "Error in getAllTransactions", e)
             Result.failure(e)

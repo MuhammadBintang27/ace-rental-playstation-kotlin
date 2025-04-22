@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ace.playstation.data.repository.PlayStationRepository
 import com.ace.playstation.model.TransactionItem
-import com.ace.playstation.ui.riwayat_transaksi.TransactionRepository
+import com.ace.playstation.repository.TransactionRepository
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale

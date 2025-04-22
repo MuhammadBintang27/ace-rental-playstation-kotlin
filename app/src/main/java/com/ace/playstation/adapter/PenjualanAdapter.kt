@@ -1,4 +1,4 @@
-package com.ace.playstation.ui.transaksi_penjualan.PenjualanAdapter
+package com.ace.playstation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

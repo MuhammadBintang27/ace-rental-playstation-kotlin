@@ -1,4 +1,4 @@
-package com.ace.playstation.ui.riwayat_transaksi
+package com.ace.playstation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,7 +12,9 @@ import java.text.NumberFormat
 import java.util.Locale
 
 class TransactionHistoryAdapter :
-    ListAdapter<TransactionItem, TransactionHistoryAdapter.TransactionViewHolder>(TransactionDiffCallback()) {
+    ListAdapter<TransactionItem, TransactionHistoryAdapter.TransactionViewHolder>(
+        TransactionDiffCallback()
+    ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TransactionViewHolder {
         val binding = ItemTransactionBinding.inflate(

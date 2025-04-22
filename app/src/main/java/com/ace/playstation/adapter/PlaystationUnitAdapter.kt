@@ -1,4 +1,4 @@
-package com.ace.playstation.ui.home
+package com.ace.playstation.adapter
 
 import PlayStation
 import android.view.LayoutInflater
