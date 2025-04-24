@@ -23,201 +23,229 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Dashboard PlayStationKu"
+                android:text="PlayStation Unit Status"
                 android:textSize="24sp"
                 android:textColor="@color/input_stroke"
                 android:textStyle="bold"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Summary Cards -->
+            <!-- Summary Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                android:layout_gravity="center"
+                app:cardCornerRadius="0dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
-                <LinearLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/card_bg"
+            android:orientation="vertical"
+            android:padding="12dp">
+                <TextView
+                    android:id="@+id/tv_no_units"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="No PlayStation units available"
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:visibility="gone"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:padding="12dp"
+                android:backgroundTint="@android:color/transparent">
+
+                <!-- Total Units -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:orientation="vertical"
-                    android:padding="16dp">
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_total_units"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10"
+                        android:textSize="34sp"
+                        android:textStyle="bold"
+                        android:textColor="#D19D63" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PlayStation Unit Status"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"/>
+                        android:text="Total"
+                        android:textColor="@android:color/white"/>
+                </LinearLayout>
+
+                <!-- Available Units -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
-                        android:id="@+id/tv_no_units"
-                        android:layout_width="match_parent"
+                        android:id="@+id/tv_available_units"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No PlayStation units available"
-                        android:gravity="center"
-                        android:padding="16dp"
-                        android:visibility="gone"/>
+                        android:text="8"
+                        android:textSize="34sp"
+                        android:textStyle="bold"
+                        android:textColor="#4CAF50" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <!-- Total Units -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
-
-                            <TextView
-                                android:id="@+id/tv_total_units"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textSize="24sp"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Total" />
-                        </LinearLayout>
-
-                        <!-- Available Units -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
-
-                            <TextView
-                                android:id="@+id/tv_available_units"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textSize="24sp"
-                                android:textColor="#4CAF50"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Available" />
-                        </LinearLayout>
-
-                        <!-- In Use Units -->
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
-
-                            <TextView
-                                android:id="@+id/tv_in_use_units"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="0"
-                                android:textSize="24sp"
-                                android:textColor="#FF5722"
-                                android:textStyle="bold"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="In Use" />
-                        </LinearLayout>
-                    </LinearLayout>
+                        android:text="Available"
+                        android:textColor="@android:color/white"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+
+                <!-- Rented Units -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_in_use_units"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:textSize="34sp"
+                        android:textStyle="bold"
+                        android:textColor="#E53935" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rented"
+                        android:textColor="@android:color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+            <!-- Revenue Summary -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Revenue Summary"
+                android:textSize="24sp"
+                android:textColor="@color/input_stroke"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
 
             <!-- Revenue Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp">
+                app:cardCornerRadius="0dp"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardElevation="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:background="@drawable/card_bg"
                     android:padding="16dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Revenue Summary"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"/>
 
                     <!-- Today Revenue -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
+                        android:paddingVertical="0dp"
+                        >
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Today" />
+                            android:text="Today"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/tv_today_revenue_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rp0"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#40FFFFFF"
+                        android:layout_marginVertical="4dp" />
 
                     <!-- Weekly Revenue -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="8dp">
+                     >
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="This Week" />
+                            android:text="This Week"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/tv_weekly_revenue_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rp0"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#40FFFFFF"
+                        android:layout_marginVertical="4dp" />
 
                     <!-- Monthly Revenue -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        >
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="This Month" />
+                            android:text="This Month"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"/>
 
                         <TextView
                             android:id="@+id/tv_monthly_revenue_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rp0"
+                            android:textColor="@android:color/white"
+                            android:textSize="16sp"
                             android:textStyle="bold"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -225,68 +253,82 @@
 
             <!-- PlayStation Units -->
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="PlayStation Units"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textColor="@color/input_stroke"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="16dp"/>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabMode="fixed">
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="All" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Available" />
-
-                <com.google.android.material.tabs.TabItem
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="In Use" />
-            </com.google.android.material.tabs.TabLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_playstation_units"
-                android:layout_width="match_parent"
-                android:layout_height="160dp"
-                android:clipToPadding="false"
-                android:orientation="horizontal"
-                android:paddingStart="4dp"
-                android:paddingEnd="4dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                app:cardElevation="0dp"
                 android:layout_marginBottom="16dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_playstation_unit" />
+                app:cardBackgroundColor="@android:color/transparent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/card_bg"
+                    android:padding="12dp">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabTextColor="@color/input_stroke"
+                        app:tabIndicatorColor="@color/input_stroke"
+                        android:background="@android:color/transparent"
+                        app:tabMode="fixed">
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Available" />
+
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="In Use" />
+                    </com.google.android.material.tabs.TabLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_playstation_units"
+                        android:layout_width="match_parent"
+                        android:layout_height="175dp"
+                        android:layout_marginTop="12dp"
+                        android:clipToPadding="false"
+                        android:orientation="horizontal"
+                        android:paddingStart="4dp"
+                        android:paddingTop="8dp"
+                        android:paddingEnd="4dp"
+                        android:paddingBottom="8dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_playstation_unit" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
             <!-- Recent Transactions -->
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recent Transactions"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/input_stroke"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/tv_no_transactions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="No recent transactions"
-                android:gravity="center"
-                android:padding="16dp"
-                android:visibility="gone"/>
+                android:text="Recent Transactions"
+                android:textSize="24sp"
+                android:textColor="@color/input_stroke"
+                android:textStyle="bold"
+                android:layout_marginBottom="16dp"/>
+
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recent_transactions"

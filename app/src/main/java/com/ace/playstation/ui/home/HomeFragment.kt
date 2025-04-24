@@ -90,7 +90,6 @@ class HomeFragment : Fragment() {
         // Observe recent transactions
         homeViewModel.recentTransactions.observe(viewLifecycleOwner) { transactions ->
             recentTransactionAdapter.submitList(transactions)
-            binding.tvNoTransactions.visibility = if (transactions.isEmpty()) View.VISIBLE else View.GONE
         }
 
         // Observe loading state

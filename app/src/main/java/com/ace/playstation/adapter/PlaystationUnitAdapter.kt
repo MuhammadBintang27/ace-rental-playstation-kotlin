@@ -40,7 +40,7 @@ class PlayStationUnitAdapter(private val onItemClick: (PlayStation) -> Unit) :
         }
 
         fun bind(playStation: PlayStation) {
-            binding.tvUnitNumber.text = "Unit #${playStation.nomorUnit}"
+            binding.tvUnitNumber.text = "Unit ${playStation.nomorUnit}"
 
             // Set status with color
             when (playStation.status) {

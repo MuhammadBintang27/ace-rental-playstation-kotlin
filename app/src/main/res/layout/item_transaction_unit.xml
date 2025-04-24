@@ -4,77 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="0dp"
     android:layout_marginVertical="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+    app:cardBackgroundColor="@android:color/transparent"
+    android:layout_marginHorizontal="8dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <!-- Transaction Type Icon -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/transaction_type_indicator"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardBackgroundColor="#2196F3"
-            app:cardCornerRadius="20dp">
-
-            <ImageView
+        android:background="@drawable/card_bg"
+        android:padding="16dp">
+        <ImageView
                 android:id="@+id/iv_transaction_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_logo_console"
-                app:tint="#FFFFFF"
-                tools:src="@android:drawable/ic_menu_compass" />
-        </androidx.cardview.widget.CardView>
-
-        <!-- Transaction Details -->
-        <LinearLayout
-            android:layout_width="0dp"
+                android:src="@drawable/ic_logo_fnb"
+                tools:src="@android:drawable/ic_menu_add" />
+        <!-- Transaction Name -->
+        <TextView
+            android:id="@+id/tv_transaction_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="12dp"
-            android:orientation="vertical">
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@id/iv_transaction_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Milky" />
 
-            <!-- Transaction Name -->
-            <TextView
-                android:id="@+id/tv_transaction_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                tools:text="PlayStation Unit #1" />
+        <!-- Transaction Details (Quantity) -->
+        <TextView
+            android:id="@+id/tv_transaction_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintStart_toEndOf="@id/iv_transaction_icon"
+            app:layout_constraintTop_toBottomOf="@id/tv_transaction_name"
+            tools:text="Qty: 2" />
 
-            <!-- Transaction Details -->
-            <TextView
-                android:id="@+id/tv_transaction_details"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="15:30 - 17:30, Durasi: 2 jam" />
-
-            <!-- Transaction Date -->
-            <TextView
-                android:id="@+id/tv_transaction_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:textColor="#757575"
-                tools:text="10 Apr 2025 15:30" />
-        </LinearLayout>
-
-        <!-- Transaction Amount -->
+        <!-- Transaction Amount (Price) -->
         <TextView
             android:id="@+id/tv_transaction_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_gravity="center_vertical"
-            tools:text="Rp30,000" />
-    </LinearLayout>
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Rp4,000" />
+
+        <!-- Transaction Date -->
+        <TextView
+            android:id="@+id/tv_transaction_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_transaction_amount"
+            tools:text="18 Apr 2025 21:00" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

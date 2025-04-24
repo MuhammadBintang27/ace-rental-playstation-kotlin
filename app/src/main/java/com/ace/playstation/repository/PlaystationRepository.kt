@@ -68,7 +68,12 @@ class PlayStationRepository {
                 }
             }
 
-            return playstationList
+            // Sort the PlayStation units by their numeric value (PS-1, PS-2, ..., PS-10)
+            return playstationList.sortedBy {
+                // Extract the number part after "PS-" and convert to Int for proper numerical sorting
+                val numberPart = it.nomorUnit.substringAfter("PS-").toIntOrNull() ?: Int.MAX_VALUE
+                numberPart
+            }
 
         } catch (e: Exception) {
             Log.e("Supabase", "Error parsing JSON: ${e.message}")

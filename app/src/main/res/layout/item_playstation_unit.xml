@@ -5,32 +5,15 @@
     android:layout_width="140dp"
     android:layout_height="match_parent"
     android:layout_margin="4dp"
-    app:cardCornerRadius="8dp"
-    app:cardElevation="2dp">
+app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="@drawable/card_bg"
         android:padding="12dp">
-
-        <!-- Status Indicator -->
-        <androidx.cardview.widget.CardView
-            android:id="@+id/status_indicator"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            app:cardBackgroundColor="#4CAF50"
-            app:cardCornerRadius="6dp"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- PlayStation Icon -->
-        <ImageView
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_logo_console"
-            tools:src="@android:drawable/ic_menu_gallery" />
 
         <!-- Unit Number -->
         <TextView
@@ -39,17 +22,43 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="16sp"
+            android:textColor="@color/input_stroke"
             android:textStyle="bold"
             tools:text="Unit #1" />
-
-        <!-- Status -->
-        <TextView
-            android:id="@+id/tv_status"
+        <!-- PlayStation Icon -->
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_logo_console"
+            tools:src="@android:drawable/ic_menu_gallery" />
+        <!-- Status Row -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:gravity="center"
-            android:textSize="12sp"
-            tools:text="Available" />
+            android:layout_marginBottom="4dp">
+
+            <!-- Status Indicator -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/status_indicator"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                app:cardBackgroundColor="#4CAF50"
+                app:cardCornerRadius="5dp"
+                android:layout_marginEnd="6dp"/>
+
+            <!-- Status -->
+            <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available"
+                android:textSize="12sp"
+                android:textColor="@color/input_stroke"/>
+        </LinearLayout>
 
         <!-- Game Type -->
         <TextView
@@ -58,6 +67,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="12sp"
+            android:textColor="@color/input_stroke"
             tools:text="FIFA 2023" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

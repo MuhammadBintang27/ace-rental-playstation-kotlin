@@ -145,13 +145,19 @@ class HomeViewModel : ViewModel() {
         val allUnits = _allPlayStationUnits.value ?: emptyList()
 
         val filteredUnits = when (filter) {
-            "AVAILABLE" -> allUnits.filter { it.status == "AVAILABLE" }
-            "IN_USE" -> allUnits.filter { it.status == "IN_USE" }
+            "Available" -> allUnits.filter { it.status == "Available" }
+            "Rented" -> allUnits.filter { it.status == "Rented" }
             else -> allUnits
         }
 
-        _playStationUnits.value = filteredUnits
-    }
+// Sort PlayStation units by their numeric value (PS-1, PS-2, ..., PS-10)
+        val sortedUnits = filteredUnits.sortedBy {
+            // Extract the number part after "PS-" and convert to Int for proper numerical sorting
+            val numberPart = it.nomorUnit.substringAfter("PS-").toIntOrNull() ?: Int.MAX_VALUE
+            numberPart
+        }
+
+        _playStationUnits.value = sortedUnits    }
 
     /**
      * Handle PlayStation unit click

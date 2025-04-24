@@ -2,7 +2,6 @@ package com.ace.playstation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -39,37 +38,26 @@ class RecentTransactionAdapter :
             // Set icon and background color based on transaction type
             when (transaction.type) {
                 "RENTAL" -> {
-                    binding.transactionTypeIndicator.setCardBackgroundColor(
-                        ContextCompat.getColor(binding.root.context, R.color.rental_blue)
-                    )
                     binding.ivTransactionIcon.setImageResource(R.drawable.ic_logo_console)
                 }
                 "PENJUALAN" -> {
                     when (transaction.category) {
-                        "MAKANAN" -> {
-                            binding.transactionTypeIndicator.setCardBackgroundColor(
-                                ContextCompat.getColor(binding.root.context, R.color.food_yellow)
-                            )
+                        "Makanan" -> {
+
                             binding.ivTransactionIcon.setImageResource(R.drawable.ic_logo_fnb)
                         }
-                        "MINUMAN" -> {
-                            binding.transactionTypeIndicator.setCardBackgroundColor(
-                                ContextCompat.getColor(binding.root.context, R.color.drink_cyan)
-                            )
+                        "Minuman" -> {
+
                             binding.ivTransactionIcon.setImageResource(R.drawable.ic_logo_beverage)
                         }
                         else -> {
-                            binding.transactionTypeIndicator.setCardBackgroundColor(
-                                ContextCompat.getColor(binding.root.context, R.color.product_green)
-                            )
+
                             binding.ivTransactionIcon.setImageResource(R.drawable.ic_logo_logout)
                         }
                     }
                 }
                 else -> {
-                    binding.transactionTypeIndicator.setCardBackgroundColor(
-                        ContextCompat.getColor(binding.root.context, R.color.gray)
-                    )
+
                     binding.ivTransactionIcon.setImageResource(R.drawable.ic_logo_transaksi)
                 }
             }
