@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    android:fontFamily="@font/poppins_bold"
+
+    android:background="@drawable/gradient_background">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_admin_dashboard"
+            android:icon="@drawable/ic_logo_home"
+            android:title="Dashboard"
+            app:actionViewClass="androidx.appcompat.widget.AppCompatTextView"
+            android:textAppearance="@style/NavigationMenuStyle"/>
+
+        <item
+            android:id="@+id/nav_manage_users"
+            android:icon="@drawable/logo_ps"
+            android:title="Manage Users" />
+        <item
+            android:id="@+id/nav_reports"
+            android:icon="@drawable/logo_ps"
+            android:title="Reports" />
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/logo_ps"
+            android:title="Settings" />
+    </group>
+
+    <item android:title="Account">
+        <menu>
+
+            <item
+                android:id="@+id/admin_nav_logout"
+                android:title="Logout"
+                android:icon="@drawable/ic_logo_logout"
+                app:actionViewClass="androidx.appcompat.widget.AppCompatTextView"
+                android:textAppearance="@style/NavigationMenuStyle"/>
+
+        </menu>
+    </item>
+</menu>
