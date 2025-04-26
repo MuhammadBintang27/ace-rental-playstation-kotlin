@@ -153,7 +153,7 @@ class LoginActivity : AppCompatActivity() {
 
     private suspend fun getUserRole(userId: String): UserRole? {
         return try {
-            val response = supabase.postgrest["user"]
+            val response = supabase.postgrest["users"]
                 .select {
                     filter {
                         eq("id", userId)
