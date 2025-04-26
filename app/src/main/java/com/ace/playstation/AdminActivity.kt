@@ -33,7 +33,7 @@ class AdminActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_admin_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_admin_dashboard, R.id.nav_home, R.id.nav_playstation, R.id.nav_penjualan, R.id.nav_riwayat), drawerLayout
+            setOf(R.id.nav_admin_dashboard, R.id.nav_admin_logout,), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.itemIconTintList = null
@@ -42,7 +42,7 @@ class AdminActivity : AppCompatActivity() {
         // Menangani klik item pada Navigation Drawer
         navView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_logout -> {
+                R.id.nav_admin_logout -> {
                     logoutUser()
                     true
                 }
@@ -62,7 +62,7 @@ class AdminActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.admin_nav_logout -> {
+            R.id.nav_admin_logout -> {
                 logoutUser()
                 true
             }
@@ -81,7 +81,7 @@ class AdminActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        val navController = findNavController(R.id.nav_host_fragment_admin_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

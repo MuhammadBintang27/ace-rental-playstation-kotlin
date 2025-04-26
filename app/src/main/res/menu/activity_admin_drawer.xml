@@ -17,29 +17,33 @@
             android:textAppearance="@style/NavigationMenuStyle"/>
 
         <item
-            android:id="@+id/nav_manage_users"
+            android:id="@+id/nav_admin_riwayat_transaksi"
             android:icon="@drawable/logo_ps"
-            android:title="Manage Users" />
+            android:title="Riwayat Transaksi"
+            android:textAppearance="@style/NavigationMenuStyle"/>
+
+
         <item
-            android:id="@+id/nav_reports"
+            android:id="@+id/nav_admin_laporan_keuangan"
             android:icon="@drawable/logo_ps"
-            android:title="Reports" />
+            android:title="Laporan Keuangan"
+            android:textAppearance="@style/NavigationMenuStyle"/>
+
+
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/nav_admin_persediaan"
             android:icon="@drawable/logo_ps"
-            android:title="Settings" />
+            android:title="Persediaan"
+            android:textAppearance="@style/NavigationMenuStyle"/>
+
+<!--        -->
+        <item
+            android:id="@+id/nav_admin_logout"
+            android:title="Logout"
+            android:icon="@drawable/ic_logo_logout"
+            app:actionViewClass="androidx.appcompat.widget.AppCompatTextView"
+            android:textAppearance="@style/NavigationMenuStyle"/>
+
     </group>
 
-    <item android:title="Account">
-        <menu>
-
-            <item
-                android:id="@+id/admin_nav_logout"
-                android:title="Logout"
-                android:icon="@drawable/ic_logo_logout"
-                app:actionViewClass="androidx.appcompat.widget.AppCompatTextView"
-                android:textAppearance="@style/NavigationMenuStyle"/>
-
-        </menu>
-    </item>
 </menu>

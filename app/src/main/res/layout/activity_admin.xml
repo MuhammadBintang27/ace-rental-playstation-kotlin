@@ -20,10 +20,10 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemTextColor="@color/input_stroke"
-        android:fitsSystemWindows="true"
-        app:itemBackground="@drawable/nav_item_background"
         android:background="#131316"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_admin"
+        app:itemBackground="@drawable/nav_item_background"
+        app:itemTextColor="@color/input_stroke"
         app:menu="@menu/activity_admin_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>
