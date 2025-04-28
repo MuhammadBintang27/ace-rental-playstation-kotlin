@@ -2,6 +2,7 @@ package com.ace.playstation.repository
 
 import android.util.Log
 import com.ace.playstation.auth.SupabaseClientInstance
+import com.ace.playstation.model.AdminSummaryItem
 import com.ace.playstation.model.Produk
 import com.ace.playstation.model.TransactionItem
 import com.ace.playstation.model.TransaksiPenjualan
@@ -379,6 +380,98 @@ class TransactionRepository {
 
             Log.d("TransactionRepo", "Transaction date: ${transaction.datetime}, in current year: $result")
             result
+        }
+    }
+
+    suspend fun getAdminSummaries(
+        fromDate: String,
+        toDate: String,
+        categoryFilter: String = CATEGORY_ALL
+    ): Result<List<AdminSummaryItem>> = withContext(Dispatchers.IO) {
+        try {
+            // 1. Fetch raw lists
+            val rentals    = fetchRental()
+            val sales      = fetchPenjualan()
+            val produkList = fetchProduk()
+
+            // 2. Parse your from/to bounds once
+            val dateParser = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val from = dateParser.parse(fromDate)!!
+            // Add 1 day so that 'toDate' is inclusive
+            val toCal = Calendar.getInstance().apply {
+                time = dateParser.parse(toDate)!!
+                add(Calendar.DAY_OF_MONTH, 1)
+            }
+            val toInclusive = toCal.time
+
+            // 3. Filter each list to only those whose datetime ∈ [from, toInclusive)
+            val filteredRentals = rentals.filter { r ->
+                // rental.waktu_mulai is like "2025-03-28T15:09:55"
+                val dateOnly = r.waktu_mulai.substring(0, 10)       // "yyyy-MM-dd"
+                val d = dateParser.parse(dateOnly)
+                d != null && !d.before(from) && d.before(toInclusive)
+            }
+
+            val filteredSales = sales.filter { s ->
+                // penjualan.created_at might come as "2025-04-10T12:34:56" or similar
+                val createdStr = s.created_at.toString().substring(0, 10)
+                val d = dateParser.parse(createdStr)
+                d != null && !d.before(from) && d.before(toInclusive)
+            }
+
+            // 4. Now do your grouping & summing exactly as before, but over the filtered lists
+            data class Acc(var count: Int = 0, var income: Double = 0.0)
+            val map = mutableMapOf<Pair<String,String>, Acc>()
+
+            // Rentals
+            filteredRentals.forEach { r ->
+                val key = "PlayStation Unit #${r.unit_id}" to r.kategori_main
+                val acc = map.getOrPut(key) { Acc() }
+                acc.count  += r.durasi
+                acc.income += r.harga
+            }
+
+            // Sales
+            filteredSales.forEach { s ->
+                val prod = produkList.find { it.produk_id == s.produk_id } ?: return@forEach
+                val key = prod.nama_produk to prod.kategori
+                val acc = map.getOrPut(key) { Acc() }
+                acc.count  += s.jumlah
+                acc.income += s.total_harga
+            }
+
+            // 5. Apply categoryFilter if needed
+            val entries = map.entries.filter { (key, _) ->
+                when (categoryFilter) {
+                    CATEGORY_ALL    -> true
+                    CATEGORY_RENTAL -> key.second.equals("RENTAL", true)
+                    CATEGORY_MAKANAN-> key.second.equals("MAKANAN", true)
+                    CATEGORY_MINUMAN-> key.second.equals("MINUMAN", true)
+                    else            -> true
+                }
+            }
+
+            // 6. Build your summary list
+            // sort by category (A→Z), then by name (A→Z)
+            val summaries = entries
+                .map { (key, acc) ->
+                    AdminSummaryItem(
+                        name                = key.first,
+                        category            = key.second,
+                        totalCountOrMinutes = acc.count,
+                        totalIncome         = acc.income
+                    )
+                }
+                .sortedWith(
+                    compareBy<AdminSummaryItem> { it.category }
+                        .thenBy { it.name }
+                )
+
+
+            Result.success(summaries)
+        } catch (e: Exception) {
+            Log.e("TransactionRepo", "getAdminSummaries failed", e)
+            Result.failure(e)
         }
     }
 }

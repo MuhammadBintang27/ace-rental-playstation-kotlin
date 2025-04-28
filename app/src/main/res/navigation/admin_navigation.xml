@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/nav_admin_riwayat_transaksi"
-        android:name="com.ace.playstation.ui.admin.RiwayatTransaksiFragment"
+        android:name="com.ace.playstation.ui.admin.transaksi.RiwayatTransaksiFragment"
         android:label="Riwayat Transaksi"
         tools:layout="@layout/fragment_admin_riwayat_transaksi" />
 
