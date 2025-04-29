@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/nav_admin_laporan_keuangan"
-        android:name="com.ace.playstation.ui.admin.LaporanKeuangan"
+        android:name="com.ace.playstation.ui.admin.laporanKeuangan.BalanceFragment"
         android:label="Laporan Keuangan"
         tools:layout="@layout/fragment_admin_laporan_keuangan" />
 

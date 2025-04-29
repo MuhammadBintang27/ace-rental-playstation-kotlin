@@ -20,6 +20,7 @@ foundationAndroid = "1.7.8"
 playServicesAuth = "21.3.0"
 roomKtx = "2.6.1"
 swiperefreshlayout = "1.1.0"
+roomRuntimeAndroid = "2.7.1"
 
 [libraries]
 mpandroidchart = { module = "com.github.PhilJay:MPAndroidChart", version = "v3.1.0" }
@@ -40,6 +41,7 @@ postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version
 storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", version.ref = "bom" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
+androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
