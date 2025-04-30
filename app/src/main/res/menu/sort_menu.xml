@@ -2,20 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/sort_name_asc"
-        android:title="Name (A-Z)" />
+        android:title="Nama (A-Z)" />
     <item
         android:id="@+id/sort_name_desc"
-        android:title="Name (Z-A)" />
+        android:title="Nama (Z-A)" />
     <item
         android:id="@+id/sort_price_asc"
-        android:title="Price (Low to High)" />
+        android:title="Harga (Rendah-Tinggi)" />
     <item
         android:id="@+id/sort_price_desc"
-        android:title="Price (High to Low)" />
+        android:title="Harga (Tinggi-Rendah)" />
     <item
         android:id="@+id/sort_stock_asc"
-        android:title="Stock (Low to High)" />
+        android:title="Stok (Rendah-Tinggi)" />
     <item
         android:id="@+id/sort_stock_desc"
-        android:title="Stock (High to Low)" />
+        android:title="Stok (Tinggi-Rendah)" />
 </menu>

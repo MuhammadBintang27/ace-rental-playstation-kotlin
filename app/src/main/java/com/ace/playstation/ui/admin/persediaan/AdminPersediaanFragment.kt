@@ -5,25 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ace.playstation.R
 import com.ace.playstation.adapters.ProductAdapter
-import com.google.android.material.button.MaterialButtonToggleGroup
 import kotlinx.coroutines.launch
 
 class AdminPersediaanFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var productAdapter: ProductAdapter
-    private lateinit var toggleGroup: MaterialButtonToggleGroup
+    private lateinit var toggleGroup: RadioGroup
     private lateinit var warningText: TextView
     private val productService = ProductService()
     private var allProducts = listOf<Product>()
+    private lateinit var warningOverlay: View
+    private lateinit var warningTextView: TextView
+    private lateinit var closeWarningBtn: View
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,9 +41,22 @@ class AdminPersediaanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Swipe to refresh logic
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshData()
+        }
+        warningOverlay = view.findViewById(R.id.warningOverlay)
+        warningTextView = view.findViewById(R.id.tv_persediaan_warnings)
+        closeWarningBtn = view.findViewById(R.id.btn_close_warning)
+
+        closeWarningBtn.setOnClickListener {
+            warningOverlay.visibility = View.GONE
+        }
+
         // Initialize views
         recyclerView = view.findViewById(R.id.recyclerViewProduk)
-        toggleGroup = view.findViewById(R.id.toggleGroup)
+        toggleGroup = view.findViewById(R.id.radioGroupFilter)
         warningText = view.findViewById(R.id.tv_persediaan_warnings)
 
         // Set up RecyclerView
@@ -48,41 +67,44 @@ class AdminPersediaanFragment : Fragment() {
         }
 
         // Set up filter toggle buttons
-        toggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (isChecked) {
-                when (checkedId) {
-                    R.id.btn_all -> showAllProducts()
-                    R.id.btn_makanan -> filterByCategory("Makanan")
-                    R.id.btn_minuman -> filterByCategory("Minuman")
-                }
+        toggleGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.radio_all -> showAllProducts()
+                R.id.radio_makanan -> filterByCategory("Makanan")
+                R.id.radio_minuman -> filterByCategory("Minuman")
             }
         }
 
         // Set up sort button click listener
         view.findViewById<View>(R.id.btn_sort).setOnClickListener { showSortingMenu(it) }
 
-        // Set up add stock button click
+        // Set up add stock button click - UPDATED HERE
         view.findViewById<View>(R.id.btn_tambah_persediaan).setOnClickListener {
-            // Navigation to add product screen
-            // findNavController().navigate(R.id.action_adminPersediaanFragment_to_addProductFragment)
-            Toast.makeText(context, "Tambah produk baru"    , Toast.LENGTH_SHORT).show()
+            showAddProductDialog()
         }
 
         // Load initial data
         loadProducts()
     }
 
-    private fun loadProducts() {
-        lifecycleScope.launch {
-            try {
-                allProducts = productService.getAllProducts()
-                productAdapter.setProducts(allProducts)
-                updateWarningText()
-            } catch (e: Exception) {
-                // Handle error
-                showError("Failed to load products: ${e.message}")
+    // NEW METHOD: Shows the add product dialog
+    private fun showAddProductDialog() {
+        val dialog = AddOrIncrementProductDialog()
+        dialog.setProductActionListener(object : AddOrIncrementProductDialog.ProductActionListener {
+            override fun onProductAdded() {
+                refreshData() // Refresh your data display
             }
-        }
+        })
+        dialog.show(childFragmentManager, "AddOrIncrementProductDialog")
+    }
+
+//    // NEW METHOD: Implementing AddProductListener interface
+//    override fun onProductAdded() {
+//        refreshData()
+//    }
+
+    private fun loadProducts() {
+        refreshData()
     }
 
     private fun showAllProducts() {
@@ -97,10 +119,10 @@ class AdminPersediaanFragment : Fragment() {
     private fun updateWarningText() {
         val menipis = allProducts.filter { it.isStokMenipis }
         if (menipis.isEmpty()) {
-            warningText.visibility = View.GONE
+            warningOverlay.visibility = View.GONE
         } else {
-            warningText.visibility = View.VISIBLE
-            warningText.text = "Warning: ${menipis.size} Stok Menipis!"
+            warningOverlay.visibility = View.VISIBLE
+            warningText.text = "⚠️ Warning: ${menipis.size} produk stok menipis"
         }
     }
 
@@ -149,5 +171,28 @@ class AdminPersediaanFragment : Fragment() {
 
     private fun showError(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun refreshData() {
+        swipeRefreshLayout.isRefreshing = true
+        lifecycleScope.launch {
+            try {
+                allProducts = productService.getAllProducts()
+
+                // Apply the current filter
+                when (toggleGroup.checkedRadioButtonId) {
+                    R.id.radio_all -> showAllProducts()
+                    R.id.radio_makanan -> filterByCategory("Makanan")
+                    R.id.radio_minuman -> filterByCategory("Minuman")
+                    else -> showAllProducts()
+                }
+
+                updateWarningText()
+            } catch (e: Exception) {
+                showError("Refresh failed: ${e.message}")
+            } finally {
+                swipeRefreshLayout.isRefreshing = false
+            }
+        }
     }
 }
