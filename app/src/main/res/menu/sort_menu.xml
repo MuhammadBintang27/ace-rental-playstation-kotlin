@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/sort_name_asc"
+        android:title="Name (A-Z)" />
+    <item
+        android:id="@+id/sort_name_desc"
+        android:title="Name (Z-A)" />
+    <item
+        android:id="@+id/sort_price_asc"
+        android:title="Price (Low to High)" />
+    <item
+        android:id="@+id/sort_price_desc"
+        android:title="Price (High to Low)" />
+    <item
+        android:id="@+id/sort_stock_asc"
+        android:title="Stock (Low to High)" />
+    <item
+        android:id="@+id/sort_stock_desc"
+        android:title="Stock (High to Low)" />
+</menu>
