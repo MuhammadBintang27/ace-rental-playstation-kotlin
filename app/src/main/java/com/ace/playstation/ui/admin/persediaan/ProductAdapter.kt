@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,7 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
     override fun getItemCount(): Int = productList.size
 
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val ivIcon: ImageView = itemView.findViewById(R.id.imageViewProduk)
         private val tvNamaProduk: TextView = itemView.findViewById(R.id.tv_nama_produk)
         private val tvKategori: TextView = itemView.findViewById(R.id.tv_kategori)
         private val tvHarga: TextView = itemView.findViewById(R.id.tv_harga)
@@ -68,6 +70,13 @@ class ProductAdapter(private val context: Context) : RecyclerView.Adapter<Produc
                     tvStatus.setTextColor(ContextCompat.getColor(context, android.R.color.holo_green_dark))
                 }
             }
+
+            when (product.kategori) {
+                "Makanan" -> ivIcon.setImageResource(R.drawable.ic_logo_fnb)
+                "Minuman" -> ivIcon.setImageResource(R.drawable.ic_logo_beverage)
+                else       -> ivIcon.setImageResource(R.drawable.ic_logo_console)
+            }
         }
     }
+
 }

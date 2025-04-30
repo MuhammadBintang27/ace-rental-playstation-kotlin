@@ -33,7 +33,13 @@ class AdminActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_admin_content_main)
 
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_admin_dashboard, R.id.nav_admin_logout,), drawerLayout
+            setOf(
+                R.id.nav_admin_dashboard,
+                R.id.nav_admin_riwayat_transaksi,
+                R.id.nav_admin_laporan_keuangan,
+                R.id.nav_admin_persediaan,
+                R.id.nav_admin_logout,),
+            drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.itemIconTintList = null

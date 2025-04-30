@@ -9,11 +9,17 @@
 
 
     <group android:checkableBehavior="single">
+<!--        <item-->
+<!--            android:id="@+id/nav_admin_dashboard"-->
+<!--            android:icon="@drawable/ic_logo_home"-->
+<!--            android:title="Dashboard"-->
+<!--            app:actionViewClass="androidx.appcompat.widget.AppCompatTextView"-->
+<!--            android:textAppearance="@style/NavigationMenuStyle"/>-->
+
         <item
-            android:id="@+id/nav_admin_dashboard"
-            android:icon="@drawable/ic_logo_home"
-            android:title="Dashboard"
-            app:actionViewClass="androidx.appcompat.widget.AppCompatTextView"
+            android:id="@+id/nav_admin_laporan_keuangan"
+            android:icon="@drawable/logo_ps"
+            android:title="Laporan Keuangan"
             android:textAppearance="@style/NavigationMenuStyle"/>
 
         <item
@@ -22,21 +28,12 @@
             android:title="Riwayat Transaksi"
             android:textAppearance="@style/NavigationMenuStyle"/>
 
-
-        <item
-            android:id="@+id/nav_admin_laporan_keuangan"
-            android:icon="@drawable/logo_ps"
-            android:title="Laporan Keuangan"
-            android:textAppearance="@style/NavigationMenuStyle"/>
-
-
         <item
             android:id="@+id/nav_admin_persediaan"
             android:icon="@drawable/logo_ps"
             android:title="Persediaan"
             android:textAppearance="@style/NavigationMenuStyle"/>
 
-<!--        -->
         <item
             android:id="@+id/nav_admin_logout"
             android:title="Logout"
