@@ -15,8 +15,7 @@
         android:padding="10dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/card_bg"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle">
+        android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/spinnerTimeFilter"

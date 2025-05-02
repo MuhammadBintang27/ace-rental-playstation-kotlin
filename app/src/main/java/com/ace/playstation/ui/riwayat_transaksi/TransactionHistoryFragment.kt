@@ -1,6 +1,7 @@
 package com.ace.playstation.ui.riwayat_transaksi
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -60,40 +61,29 @@ class TransactionHistoryFragment : Fragment() {
     private fun setupFilterSpinner() {
         // Time filter setup
         val timeFilterOptions = arrayOf("Semua", "Hari Ini", "Minggu Ini", "Bulan Ini", "Tahun Ini", "Kustom")
-        val timeSpinnerAdapter = ArrayAdapter(requireContext(),
-            R.layout.spinner_item, // Teks putih
-            timeFilterOptions)
+        val timeSpinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, timeFilterOptions)
         timeSpinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
 
         binding.spinnerTimeFilter.adapter = timeSpinnerAdapter
         binding.spinnerTimeFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                binding.datePickerLayout.visibility = if (position == 5) View.VISIBLE else View.GONE
                 when (position) {
-                    0 -> applyCurrentFilters("all") // Semua
+                    0 -> applyCurrentFilters("all")
                     1 -> applyCurrentFilters("today")
                     2 -> applyCurrentFilters("week")
                     3 -> applyCurrentFilters("month")
                     4 -> applyCurrentFilters("year")
-                    5 -> binding.datePickerLayout.visibility = View.VISIBLE
+                    5 -> applyCurrentFilters("custom")
                 }
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         // Category filter setup
         val categoryFilterOptions = arrayOf("Semua", "Rental", "Makanan", "Minuman")
-
-// Gunakan layout custom untuk teks spinner
-        val categorySpinnerAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.spinner_item, // Teks putih
-            categoryFilterOptions
-        )
-
-// Gunakan layout custom untuk dropdown spinner
+        val categorySpinnerAdapter = ArrayAdapter(requireContext(), R.layout.spinner_item, categoryFilterOptions)
         categorySpinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.spinnerCategoryFilter.adapter = categorySpinnerAdapter
         binding.spinnerCategoryFilter.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -105,16 +95,12 @@ class TransactionHistoryFragment : Fragment() {
                     3 -> TransactionRepository.CATEGORY_MINUMAN
                     else -> TransactionRepository.CATEGORY_ALL
                 }
-
-                applyCurrentFilters(getSelectedTimeFilter(), category)
+                applyCurrentFilters(categoryFilter = category)
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // Do nothing
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
     }
-
     // Helper to get current time filter
     private fun getSelectedTimeFilter(): String {
         return when (binding.spinnerTimeFilter.selectedItemPosition) {
@@ -144,9 +130,28 @@ class TransactionHistoryFragment : Fragment() {
             val fromDate = binding.tvDateFrom.text.toString()
             val toDate = binding.tvDateTo.text.toString()
 
-            if (fromDate.isNotEmpty() && toDate.isNotEmpty()) {
-                viewModel.filterTransactions(timeFilter, fromDate, toDate, categoryFilter)
+            if (fromDate.isEmpty() || toDate.isEmpty()) {
+                // Tampilkan pesan error ke pengguna
+                binding.tvDateFrom.error = if (fromDate.isEmpty()) "Pilih tanggal awal" else null
+                binding.tvDateTo.error = if (toDate.isEmpty()) "Pilih tanggal akhir" else null
+                return
             }
+
+            // Validasi fromDate <= toDate
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            try {
+                val from = dateFormat.parse(fromDate)
+                val to = dateFormat.parse(toDate)
+                if (from != null && to != null && from.after(to)) {
+                    binding.tvDateFrom.error = "Tanggal awal tidak boleh setelah tanggal akhir"
+                    return
+                }
+            } catch (e: Exception) {
+                Log.e("TransactionHistory", "Error parsing dates for validation", e)
+                return
+            }
+
+            viewModel.filterTransactions(timeFilter, fromDate, toDate, categoryFilter)
         } else {
             viewModel.filterTransactions(timeFilter, "", "", categoryFilter)
         }
@@ -200,7 +205,6 @@ class TransactionHistoryFragment : Fragment() {
 
         datePickerDialog.show()
     }
-
     private fun observeTransactions() {
         viewModel.transactions.observe(viewLifecycleOwner) { transactions ->
             adapter.submitList(transactions)

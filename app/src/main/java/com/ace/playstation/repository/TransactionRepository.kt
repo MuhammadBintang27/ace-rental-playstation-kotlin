@@ -267,33 +267,36 @@ class TransactionRepository {
         try {
             Log.d("TransactionRepo", "Filtering date range: $fromDate to $toDate")
 
-            // Convert UI format dates to comparable Date objects
-            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            val fromDateObj = dateFormat.parse(fromDate)
-            val toDateObj = dateFormat.parse(toDate)
+            // Input date format dari UI (yyyy-MM-dd)
+            val inputDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+            val fromDateObj = inputDateFormat.parse(fromDate)
+            val toDateObj = inputDateFormat.parse(toDate)
 
             if (fromDateObj == null || toDateObj == null) {
                 Log.e("TransactionRepo", "Could not parse date range: $fromDate - $toDate")
                 return transactions
             }
 
-            // Add one day to toDate to make it inclusive
+            // Tambahkan satu hari ke toDate agar inklusif
             val calendar = Calendar.getInstance()
             calendar.time = toDateObj
             calendar.add(Calendar.DAY_OF_MONTH, 1)
             val adjustedToDate = calendar.time
 
+            // Format transaksi (dd MMM yyyy HH:mm)
+            val transactionDateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+
             return transactions.filter { transaction ->
                 try {
+                    // Ambil bagian tanggal saja dari datetime transaksi
                     val parts = transaction.datetime.split(" ")
                     if (parts.size >= 3) {
-                        val dateStr = "${parts[0]} ${parts[1]} ${parts[2]}"
-                        val transDate = dateFormat.parse(dateStr)
+                        val dateStr = "${parts[0]} ${parts[1]} ${parts[2]}" // dd MMM yyyy
+                        val transDate = transactionDateFormat.parse(dateStr)
 
                         val result = transDate != null &&
                                 !transDate.before(fromDateObj) &&
                                 transDate.before(adjustedToDate)
-
                         Log.d("TransactionRepo", "Transaction date: $dateStr, include: $result")
                         result
                     } else {
