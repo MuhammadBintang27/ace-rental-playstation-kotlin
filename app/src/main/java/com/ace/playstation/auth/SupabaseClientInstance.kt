@@ -16,10 +16,7 @@ object SupabaseClientInstance {
         install(Auth){
             alwaysAutoRefresh=true
         }
-
-
     }
-
 
     fun getClient(): SupabaseClient {
         Log.d("tes client", "getClient: $client")

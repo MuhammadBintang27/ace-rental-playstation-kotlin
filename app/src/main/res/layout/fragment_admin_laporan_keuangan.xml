@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/adminLaporanKeuangan"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Laporan Keuangan"
+            android:textSize="20sp"
+            android:textColor="@color/input_stroke"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <!--Balance card-->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/primary_background_dark"
+        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Total Balance"
+                android:textSize="16sp"
+                android:textColor="#D3D3D3" />
+
+            <TextView
+            android:id="@+id/total_balance_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="IDR 50.XXX.XXX,XX" android:textSize="24sp"
+            android:textColor="@color/input_stroke"
+            android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@color/cardview_dark_background">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pengeluaran (30 Hari)"
+                        android:textSize="14sp"
+                        android:textColor="#D3D3D3" />
+                    <TextView
+                        android:id="@+id/outcome_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IDR 2.XXX.XXX.XX"
+                        android:textSize="16sp"
+                        android:textColor="@color/input_stroke" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pemasukan (30 Hari)"
+                        android:textSize="14sp"
+                        android:textColor="#D3D3D3" />
+
+                    <TextView
+                        android:id="@+id/income_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IDR 4.XXX.XXX.XX"
+                        android:textColor="@color/input_stroke"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Statistik"
+        android:textSize="18sp"
+        android:textColor="@color/input_stroke"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp">
+        <Button
+            android:id="@+id/hari_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="7 Hari"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50" android:layout_marginRight="8dp"/>
+        <Button
+            android:id="@+id/bulan_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30 Hari"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50"
+            android:layout_marginRight="8dp"/>
+        <Button
+            android:id="@+id/tahun_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="365 Hari"
+            android:textSize="14sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#4CAF50"/>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:cardBackgroundColor="@color/primary_background_dark"
+        app:cardCornerRadius="8dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tren Keuangan Rental PS (Per Bulan)"
+                android:textSize="16sp"
+                android:textColor="#D3D3D3"
+                android:padding="16dp"/>
+
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/line_chart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

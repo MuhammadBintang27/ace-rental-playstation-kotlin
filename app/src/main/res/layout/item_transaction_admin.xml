@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/cardContainer"
+        android:id="@+id/cardContainerAdmin"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
@@ -22,23 +22,23 @@
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
-             <TextView
-                android:id="@+id/tvTransactionType"
+            <TextView
+                android:id="@+id/tvNamaItemAdmin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/input_stroke"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                tools:text="Sewa Rental PS (Regular)" />
+                tools:text="Pop Mie" />
 
-            <TextView
-                android:id="@+id/tvTransactionDate"
-                android:layout_width="wrap_content"
-                android:textColor="@color/input_stroke"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="2023-01-01 14:30" />
+<!--            <TextView-->
+<!--                android:id="@+id/tvJumlahTransaksiAdmin"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:textColor="@color/input_stroke"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="14sp"-->
+<!--                tools:text="15 Pcs" />-->
         </LinearLayout>
 
 
@@ -49,16 +49,16 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvItemName"
+                android:id="@+id/tvKategoriItemAdmin"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/input_stroke"
                 android:textSize="16sp"
-                tools:text="PlayStation Unit #1" />
+                tools:text="Makanan" />
 
             <TextView
-                android:id="@+id/tvAmount"
+                android:id="@+id/tvAmountAdmin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -68,7 +68,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvDetails"
+            android:id="@+id/tvDetailsAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_navigation"
+    app:startDestination="@+id/nav_admin_laporan_keuangan">
+
+    <fragment
+        android:id="@+id/nav_admin_dashboard"
+        android:name="com.ace.playstation.ui.admin.DashboardFragment"
+        android:label="Dashboard"
+        tools:layout="@layout/fragment_admin_dashboard" />
+
+    <fragment
+        android:id="@+id/nav_admin_riwayat_transaksi"
+        android:name="com.ace.playstation.ui.admin.transaksi.RiwayatTransaksiFragment"
+        android:label="Riwayat Transaksi"
+        tools:layout="@layout/fragment_admin_riwayat_transaksi" />
+
+    <fragment
+        android:id="@+id/nav_admin_laporan_keuangan"
+        android:name="com.ace.playstation.ui.admin.laporanKeuangan.BalanceFragment"
+        android:label="Laporan Keuangan"
+        tools:layout="@layout/fragment_admin_laporan_keuangan" />
+
+    <fragment
+        android:id="@+id/nav_admin_persediaan"
+        android:name="com.ace.playstation.ui.admin.persediaan.AdminPersediaanFragment"
+        android:label="Persediaan"
+        tools:layout="@layout/fragment_admin_persediaan" />
+
+</navigation>

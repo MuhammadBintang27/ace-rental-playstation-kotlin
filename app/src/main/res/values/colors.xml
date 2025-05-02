@@ -22,11 +22,14 @@
     <color name="purple_700">#3700B3</color>
     <color name="black">#000000</color>
     <color name="teal_200">#03DAC5</color>
+
     <!-- Status Colors -->
     <color name="available_green">#4CAF50</color>
     <color name="in_use_orange">#FF5722</color>
     <color name="available_color">#4CAF50</color>
     <color name="gray">#757575</color>
+    <color name="warning_red">#A54945</color>
+
 
     <!-- Transaction Type Colors -->
     <color name="rental_blue">#2196F3</color>
