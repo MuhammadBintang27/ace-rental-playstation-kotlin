@@ -9,7 +9,6 @@ import com.ace.playstation.repository.FinancialRepository
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DateTimeUnit
-import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import kotlinx.datetime.toLocalDateTime
@@ -17,42 +16,56 @@ import kotlinx.datetime.toLocalDateTime
 class BalanceViewModel : ViewModel() {
     private val repo = FinancialRepository()
 
-    private val _totalBalance   = MutableLiveData<Double>()
+    private val _totalBalance = MutableLiveData<Double>()
     val totalBalance: LiveData<Double> = _totalBalance
 
-    private val _monthlyIncome  = MutableLiveData<Double>()
+    private val _monthlyIncome = MutableLiveData<Double>()
     val monthlyIncome: LiveData<Double> = _monthlyIncome
 
     private val _monthlyOutcome = MutableLiveData<Double>()
     val monthlyOutcome: LiveData<Double> = _monthlyOutcome
 
-    private val _trend          = MutableLiveData<List<FinancialEntry>>()
+    private val _monthlyTotal = MutableLiveData<Double>()
+    val monthlyTotal: LiveData<Double> = _monthlyTotal
+
+    private val _trend = MutableLiveData<List<FinancialEntry>>()
     val trend: LiveData<List<FinancialEntry>> = _trend
 
+    private val _selectedYear = MutableLiveData<Int>()
+    val selectedYear: LiveData<Int> = _selectedYear
+
+    private val _selectedMonth = MutableLiveData<Int>()
+    val selectedMonth: LiveData<Int> = _selectedMonth
+
     init {
+        val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+        _selectedYear.value = now.year
+        _selectedMonth.value = now.monthNumber
         refreshAll()
     }
 
-    /** Refresh balance, income & outcome for last 30 days, and trend(30). */
     fun refreshAll() {
         loadTotalBalance()
         loadMonthlySummary()
         loadTrend(30)
     }
 
-    /** Expose manual refresh (e.g. for pull-to-refresh) */
-    fun refreshData() = refreshAll()
+    fun setMonthYear(year: Int, month: Int) {
+        _selectedYear.value = year
+        _selectedMonth.value = month
+        loadMonthlySummary()
+    }
 
     fun loadTrend(days: Int) = viewModelScope.launch {
-        val now = Clock.System
-            .now()
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-            .date
-
-        // Subtract 'days' days
-        val startDate = now.minus(days.toLong(), DateTimeUnit.DAY).toString()
-        val endDate   = now.toString()
-
+        val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+        val startDate = now.minus(days.toLong(), DateTimeUnit.DAY).toString().let {
+            val parts = it.split("-")
+            "${parts[1]}/${parts[2]}/${parts[0]}" // Convert YYYY-MM-DD to MM/DD/YYYY
+        }
+        val endDate = now.toString().let {
+            val parts = it.split("-")
+            "${parts[1]}/${parts[2]}/${parts[0]}"
+        }
         _trend.value = repo.getFinancialTrendData(startDate, endDate)
     }
 
@@ -61,17 +74,14 @@ class BalanceViewModel : ViewModel() {
     }
 
     fun loadMonthlySummary() = viewModelScope.launch {
-        // Get current LocalDate in system time zone
-        val now = Clock.System
-            .now()
-            .toLocalDateTime(TimeZone.currentSystemDefault())
-            .date
-
-        // Calculate date from 30 days ago
-        val start30Days = now.minus(30, DateTimeUnit.DAY).toString()
-        val today = now.toString()
-
-        _monthlyIncome.value = repo.getIncomeInRange(start30Days, today)
-        _monthlyOutcome.value = repo.getOutcomeInRange(start30Days, today)
+        val year = _selectedYear.value ?: return@launch
+        val month = _selectedMonth.value ?: return@launch
+        // Reset to 0 to avoid stale data
+        _monthlyIncome.value = 0.0
+        _monthlyOutcome.value = 0.0
+        _monthlyIncome.value = repo.getMonthlyIncome(year, month)
+        _monthlyOutcome.value = repo.getMonthlyOutcome(year, month)
+        _monthlyTotal.value = (_monthlyIncome.value ?: 0.0) - (_monthlyOutcome.value ?: 0.0)
+        android.util.Log.d("BalanceViewModel", "Month: $month, Year: $year, Income: ${_monthlyIncome.value}, Outcome: ${_monthlyOutcome.value}")
     }
 }

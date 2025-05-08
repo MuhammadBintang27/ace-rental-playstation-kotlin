@@ -13,18 +13,22 @@ class FinancialRepository {
     private val client = SupabaseClientInstance.getClient()
 
     /**
-     * Gets the current balance from the most recent entry in the database
+     * Gets the current balance from the most recent entry in the database, ordered by created_at
      */
     suspend fun getCurrentBalance(): Double = withContext(Dispatchers.IO) {
         val list = client
             .from("laporan_keuangan")
             .select {
-                order("tanggal", Order.DESCENDING)
+                order("created_at", Order.DESCENDING)
                 limit(1)
             }
             .decodeList<SaldoEntry>()
 
-        list.firstOrNull()?.saldo ?: 0.0
+        if (list.isEmpty()) {
+            0.0
+        } else {
+            list.first().saldo
+        }
     }
 
     /**
@@ -35,7 +39,6 @@ class FinancialRepository {
         from: String,
         to: String
     ): List<FinancialEntry> = withContext(Dispatchers.IO) {
-        // 1. Query Supabase
         val rows = client
             .from("laporan_keuangan")
             .select {
@@ -47,7 +50,6 @@ class FinancialRepository {
             }
             .decodeList<RawEntry>()
 
-        // 2. Group by parsed LocalDate and sum
         rows
             .groupBy { LocalDate.parse(it.tanggal) }
             .map { (date, group) ->
@@ -57,8 +59,10 @@ class FinancialRepository {
             }
     }
 
-    /** Total income between [from] and [to], inclusive. */
-    suspend fun getIncomeInRange(from: String, to: String): Double = withContext(Dispatchers.IO) {
+    /** Total income for a specific month and year */
+    suspend fun getMonthlyIncome(year: Int, month: Int): Double = withContext(Dispatchers.IO) {
+        val from = String.format("%02d/01/%04d", month, year) // e.g., 04/01/2025
+        val to = String.format("%02d/%02d/%04d", month, getLastDayOfMonth(year, month), year) // e.g., 04/30/2025
         client
             .from("laporan_keuangan")
             .select {
@@ -72,8 +76,10 @@ class FinancialRepository {
             .sumOf { it.jumlah }
     }
 
-    /** Total expenses between [from] and [to], inclusive. */
-    suspend fun getOutcomeInRange(from: String, to: String): Double = withContext(Dispatchers.IO) {
+    /** Total expenses for a specific month and year */
+    suspend fun getMonthlyOutcome(year: Int, month: Int): Double = withContext(Dispatchers.IO) {
+        val from = String.format("%02d/01/%04d", month, year) // e.g., 04/01/2025
+        val to = String.format("%02d/%02d/%04d", month, getLastDayOfMonth(year, month), year) // e.g., 04/30/2025
         client
             .from("laporan_keuangan")
             .select {
@@ -87,7 +93,7 @@ class FinancialRepository {
             .sumOf { it.jumlah }
     }
 
-    /** Overall total income (ever). */
+    /** Overall total income (ever) */
     suspend fun getTotalIncome(): Double = withContext(Dispatchers.IO) {
         client
             .from("laporan_keuangan")
@@ -100,7 +106,7 @@ class FinancialRepository {
             .sumOf { it.jumlah }
     }
 
-    /** Overall total expenses (ever). */
+    /** Overall total expenses (ever) */
     suspend fun getTotalOutcome(): Double = withContext(Dispatchers.IO) {
         client
             .from("laporan_keuangan")
@@ -113,7 +119,16 @@ class FinancialRepository {
             .sumOf { it.jumlah }
     }
 
-    /** Internal DTO for decoding each row of laporan_keuangan. */
+    /** Helper to get the last day of a month */
+    private fun getLastDayOfMonth(year: Int, month: Int): Int {
+        return when (month) {
+            2 -> if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0)) 29 else 28
+            4, 6, 9, 11 -> 30
+            else -> 31
+        }
+    }
+
+    /** Internal DTO for decoding each row of laporan_keuangan */
     @Serializable
     private data class RawEntry(
         val tanggal: String,
@@ -121,7 +136,7 @@ class FinancialRepository {
         val jumlah: Double
     )
 
-    /** Internal DTO for decoding saldo entries. */
+    /** Internal DTO for decoding saldo entries */
     @Serializable
     private data class SaldoEntry(
         val saldo: Double

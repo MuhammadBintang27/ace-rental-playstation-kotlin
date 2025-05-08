@@ -14,4 +14,18 @@
     <string name="menu_home">Home</string>
     <string name="menu_playstation">Playstation</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="laporan_keuangan_title">Laporan Keuangan</string>
+    <string name="total_balance_label">Total Balance (All Time)</string>
+    <string name="default_total_balance">IDR 50,000,000</string>
+    <string name="monthly_income_label">Pemasukan Bulanan</string>
+    <string name="default_monthly_income">IDR 4,000,000</string>
+    <string name="monthly_outcome_label">Pengeluaran Bulanan</string>
+    <string name="default_monthly_outcome">IDR 2,000,000</string>
+    <string name="monthly_total_label">Total Bulanan</string>
+    <string name="default_monthly_total">IDR 2,000,000</string>
+    <string name="statistics_label">Statistik</string>
+    <string name="seven_days">7 Hari</string>
+    <string name="thirty_days">30 Hari</string>
+    <string name="three_hundred_sixty_five_days">365 Hari</string>
+    <string name="financial_trend_label">Tren Keuangan Rental PS</string>
 </resources>

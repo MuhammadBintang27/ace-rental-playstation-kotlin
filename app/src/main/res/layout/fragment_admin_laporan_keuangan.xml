@@ -6,182 +6,230 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_background"
-    android:padding="8dp">
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Laporan Keuangan"
-            android:textSize="20sp"
-            android:textColor="@color/input_stroke"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"/>
-    </LinearLayout>
-
-    <!--Balance card-->
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/primary_background_dark"
-        app:cardCornerRadius="8dp"
-        android:layout_marginBottom="16dp">
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        android:orientation="vertical"
+        android:padding="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:baselineAligned="false">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Total Balance"
-                android:textSize="16sp"
-                android:textColor="#D3D3D3" />
+                android:layout_weight="1"
+                android:text="@string/laporan_keuangan_title"
+                android:textSize="20sp"
+                android:textColor="@color/input_stroke"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"/>
+        </LinearLayout>
 
-            <TextView
-            android:id="@+id/total_balance_text"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="IDR 50.XXX.XXX,XX" android:textSize="24sp"
-            android:textColor="@color/input_stroke"
-            android:textStyle="bold" />
+            android:background="@drawable/gradient_background"
+            app:cardCornerRadius="8dp"
+            android:layout_marginBottom="16dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:background="@color/cardview_dark_background">
-                <LinearLayout
-                    android:layout_width="0dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="wrap_content"
+                    android:text="@string/total_balance_label"
+                    android:textSize="16sp"
+                    android:textColor="#D3D3D3" />
+
+                <TextView
+                    android:id="@+id/total_balance_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_total_balance"
+                    android:textSize="24sp"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Pengeluaran (30 Hari)"
-                        android:textSize="14sp"
-                        android:textColor="#D3D3D3" />
-                    <TextView
-                        android:id="@+id/outcome_text"
-                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/monthly_income_label"
+                            android:textSize="14sp"
+                            android:textColor="#D3D3D3" />
+
+                        <TextView
+                            android:id="@+id/income_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/default_monthly_income"
+                            android:textSize="16sp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="IDR 2.XXX.XXX.XX"
-                        android:textSize="16sp"
-                        android:textColor="@color/input_stroke" />
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/monthly_outcome_label"
+                            android:textSize="14sp"
+                            android:textColor="#D3D3D3" />
+
+                        <TextView
+                            android:id="@+id/outcome_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/default_monthly_outcome"
+                            android:textSize="16sp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/monthly_total_label"
+                            android:textSize="14sp"
+                            android:textColor="#D3D3D3" />
+
+                        <TextView
+                            android:id="@+id/monthly_total_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/default_monthly_total"
+                            android:textSize="16sp"
+                            android:textColor="@color/black" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/month_spinner"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text="Pemasukan (30 Hari)"
-                        android:textSize="14sp"
-                        android:textColor="#D3D3D3" />
+                        android:layout_marginEnd="8dp" />
 
-                    <TextView
-                        android:id="@+id/income_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="IDR 4.XXX.XXX.XX"
-                        android:textColor="@color/input_stroke"
-                        android:textSize="16sp" />
+                    <Spinner
+                        android:id="@+id/year_spinner"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Statistik"
-        android:textSize="18sp"
-        android:textColor="@color/input_stroke"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-        <Button
-            android:id="@+id/hari_button"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="7 Hari"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4CAF50" android:layout_marginRight="8dp"/>
-        <Button
-            android:id="@+id/bulan_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="30 Hari"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4CAF50"
-            android:layout_marginRight="8dp"/>
-        <Button
-            android:id="@+id/tahun_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="365 Hari"
-            android:textSize="14sp"
-            android:textColor="#FFFFFF"
-            android:backgroundTint="#4CAF50"/>
-    </LinearLayout>
+            android:text="@string/statistics_label"
+            android:textSize="18sp"
+            android:textColor="@color/input_stroke"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:cardBackgroundColor="@color/primary_background_dark"
-        app:cardCornerRadius="8dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/hari_button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tren Keuangan Rental PS (Per Bulan)"
-                android:textSize="16sp"
-                android:textColor="#D3D3D3"
-                android:padding="16dp"/>
+                android:text="@string/seven_days"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginEnd="8dp"/>
 
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/line_chart"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/bulan_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/thirty_days"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"
+                android:layout_marginEnd="8dp"/>
 
+            <Button
+                android:id="@+id/tahun_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/three_hundred_sixty_five_days"
+                android:textSize="14sp"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#4CAF50"/>
         </LinearLayout>
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gradient_background"
+            app:cardCornerRadius="8dp">
 
-    </androidx.cardview.widget.CardView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/financial_trend_label"
+                    android:textSize="16sp"
+                    android:textColor="#D3D3D3"
+                    android:padding="16dp"/>
+
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/line_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
