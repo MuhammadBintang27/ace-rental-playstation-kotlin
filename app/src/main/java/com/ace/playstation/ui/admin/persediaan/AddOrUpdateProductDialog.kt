@@ -23,7 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AddOrIncrementProductDialog : DialogFragment() {
+class AddOrUpdateProductDialog : DialogFragment() {
 
     interface ProductActionListener {
         fun onProductAdded()
@@ -33,7 +33,6 @@ class AddOrIncrementProductDialog : DialogFragment() {
     private val adminProductServiceRepository = AdminProductServiceRepository()
     private var products: List<Product> = emptyList()
     private var selectedProduct: Product? = null
-    private var isIncrementMode = false
 
     fun setProductActionListener(listener: ProductActionListener) {
         this.listener = listener
@@ -52,27 +51,21 @@ class AddOrIncrementProductDialog : DialogFragment() {
 
         val dialogTitle = view.findViewById<TextView>(R.id.tv_dialog_title)
         val productNameAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.act_product_name)
-        val currentStockTextView = view.findViewById<TextView>(R.id.tv_current_stock)
-        val stockDeltaInput = view.findViewById<TextInputEditText>(R.id.et_stock_delta)
         val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
         val priceLayout = view.findViewById<TextInputLayout>(R.id.product_price_layout)
         val categoryGroup = view.findViewById<RadioGroup>(R.id.rg_product_category)
         val btnSave = view.findViewById<Button>(R.id.btn_save)
         val btnCancel = view.findViewById<Button>(R.id.btn_cancel)
 
-        // Load products for autocomplete
         lifecycleScope.launch {
             try {
                 products = adminProductServiceRepository.getAllProducts()
-
-                // Create adapter for product names
                 val productNames = products.map { it.nama_produk }
                 val adapter = ArrayAdapter(
                     requireContext(),
                     android.R.layout.simple_dropdown_item_1line,
                     productNames
                 )
-
                 withContext(Dispatchers.Main) {
                     productNameAutoComplete.setAdapter(adapter)
                 }
@@ -83,21 +76,17 @@ class AddOrIncrementProductDialog : DialogFragment() {
             }
         }
 
-        // Handle product selection
         productNameAutoComplete.setOnItemClickListener { _, _, position, _ ->
             val productName = productNameAutoComplete.adapter.getItem(position).toString()
             handleProductSelection(productName, view)
         }
 
-        // Also handle when user types exact product name
         productNameAutoComplete.doAfterTextChanged { text ->
             val productName = text.toString()
             val matchingProduct = products.find { it.nama_produk == productName }
-
             if (matchingProduct != null) {
                 handleProductSelection(productName, view)
             } else {
-                // Switch to add new product mode
                 switchToAddMode(view)
             }
         }
@@ -108,15 +97,14 @@ class AddOrIncrementProductDialog : DialogFragment() {
 
         btnSave.setOnClickListener {
             if (validateInputs(view)) {
-                if (isIncrementMode) {
-                    incrementStock(view)
+                if (selectedProduct != null) {
+                    updateProductPrice(view)
                 } else {
                     addNewProduct(view)
                 }
             }
         }
 
-        // Start in add new product mode
         switchToAddMode(view)
     }
 
@@ -124,152 +112,105 @@ class AddOrIncrementProductDialog : DialogFragment() {
         val product = products.find { it.nama_produk == productName }
         if (product != null) {
             selectedProduct = product
-            switchToIncrementMode(view)
+            switchToUpdatePriceMode(view)
         }
     }
 
     private fun switchToAddMode(view: View) {
-        isIncrementMode = false
         selectedProduct = null
 
-        // Update UI
         val dialogTitle = view.findViewById<TextView>(R.id.tv_dialog_title)
-        val currentStockTextView = view.findViewById<TextView>(R.id.tv_current_stock)
         val priceLayout = view.findViewById<TextInputLayout>(R.id.product_price_layout)
         val categoryGroup = view.findViewById<RadioGroup>(R.id.rg_product_category)
         val btnSave = view.findViewById<Button>(R.id.btn_save)
+        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
 
         dialogTitle.text = "Tambah Produk Baru"
-        currentStockTextView.visibility = View.GONE
         priceLayout.visibility = View.VISIBLE
         categoryGroup.visibility = View.VISIBLE
         btnSave.text = "Simpan"
+        priceInput.setText("")
     }
 
-    private fun switchToIncrementMode(view: View) {
-        isIncrementMode = true
-
-        // Update UI
+    private fun switchToUpdatePriceMode(view: View) {
         val dialogTitle = view.findViewById<TextView>(R.id.tv_dialog_title)
-        val currentStockTextView = view.findViewById<TextView>(R.id.tv_current_stock)
         val priceLayout = view.findViewById<TextInputLayout>(R.id.product_price_layout)
-        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
         val categoryGroup = view.findViewById<RadioGroup>(R.id.rg_product_category)
         val btnSave = view.findViewById<Button>(R.id.btn_save)
+        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
 
-        dialogTitle.text = "Tambah Stok & Ubah Harga"
-        currentStockTextView.visibility = View.VISIBLE
-        currentStockTextView.text = "Current stock: ${selectedProduct?.stok_persediaan ?: 0}"
-
-        // Enable price change
+        dialogTitle.text = "Perbarui Harga Produk"
         priceLayout.visibility = View.VISIBLE
         categoryGroup.visibility = View.GONE
-        btnSave.text = "Update"
+        btnSave.text = "Perbarui Harga"
 
-        // Set current price as default in price input
         priceInput.setText(selectedProduct?.harga?.toString() ?: "")
     }
 
     private fun validateInputs(view: View): Boolean {
         val productNameAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.act_product_name)
-        val stockDeltaInput = view.findViewById<TextInputEditText>(R.id.et_stock_delta)
         val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
 
         val name = productNameAutoComplete.text.toString().trim()
-        val stockDeltaString = stockDeltaInput.text.toString().trim()
-
         if (name.isEmpty()) {
             Toast.makeText(context, "Product name cannot be empty", Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (stockDeltaString.isEmpty()) {
-            Toast.makeText(context, "Stock amount cannot be empty", Toast.LENGTH_SHORT).show()
+        val priceString = priceInput.text.toString().trim()
+        if (priceString.isEmpty()) {
+            Toast.makeText(context, "Price cannot be empty", Toast.LENGTH_SHORT).show()
             return false
         }
 
         try {
-            val stockDelta = stockDeltaString.toInt()
-            if (stockDelta < 0) {
-                Toast.makeText(context, "Stock amount must be greater than 0", Toast.LENGTH_SHORT).show()
+            val price = priceString.toDouble()
+            if (price <= 0) {
+                Toast.makeText(context, "Price must be greater than 0", Toast.LENGTH_SHORT).show()
                 return false
             }
         } catch (e: NumberFormatException) {
-            Toast.makeText(context, "Invalid stock amount", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Invalid price format", Toast.LENGTH_SHORT).show()
             return false
-        }
-
-        // If we're adding a new product, validate price
-        if (!isIncrementMode) {
-            val priceString = priceInput.text.toString().trim()
-            if (priceString.isEmpty()) {
-                Toast.makeText(context, "Price cannot be empty", Toast.LENGTH_SHORT).show()
-                return false
-            }
-
-            try {
-                val price = priceString.toDouble()
-                if (price <= 0) {
-                    Toast.makeText(context, "Price must be greater than 0", Toast.LENGTH_SHORT).show()
-                    return false
-                }
-            } catch (e: NumberFormatException) {
-                Toast.makeText(context, "Invalid price format", Toast.LENGTH_SHORT).show()
-                return false
-            }
         }
 
         return true
     }
 
-    private fun incrementStock(view: View) {
-        if (selectedProduct == null) {
-            Toast.makeText(context, "No product selected", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val stockDeltaInput = view.findViewById<TextInputEditText>(R.id.et_stock_delta)
-        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
-        val stockDelta = stockDeltaInput.text.toString().toInt()
-
-        var updatedPrice = selectedProduct!!.harga
-        val priceString = priceInput.text.toString().trim()
-        if (priceString.isNotEmpty()) {
-            updatedPrice = priceString.toDouble()
-        }
-
-        // Create a new product with updated stock
-        val updatedProduct = selectedProduct!!.copy(
-            stok_persediaan = selectedProduct!!.stok_persediaan + stockDelta,
-            harga = updatedPrice
-        )
-
-        saveProduct(updatedProduct)
-    }
-
     private fun addNewProduct(view: View) {
         val productNameAutoComplete = view.findViewById<AutoCompleteTextView>(R.id.act_product_name)
-        val stockDeltaInput = view.findViewById<TextInputEditText>(R.id.et_stock_delta)
         val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
         val categoryGroup = view.findViewById<RadioGroup>(R.id.rg_product_category)
 
         val name = productNameAutoComplete.text.toString().trim()
-        val stockDelta = stockDeltaInput.text.toString().toInt()
         val price = priceInput.text.toString().toDouble()
 
         val selectedCategoryId = categoryGroup.checkedRadioButtonId
         val selectedRadioButton = view.findViewById<RadioButton>(selectedCategoryId)
         val category = selectedRadioButton.text.toString()
 
-        // Create new product
         val newProduct = Product(
             nama_produk = name,
             harga = price,
-            stok_persediaan = stockDelta,
+            stok_persediaan = 0,
             kategori = category
         )
 
         saveProduct(newProduct)
+    }
+
+    private fun updateProductPrice(view: View) {
+        if (selectedProduct == null) {
+            Toast.makeText(context, "No product selected", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
+        val price = priceInput.text.toString().toDouble()
+
+        val updatedProduct = selectedProduct!!.copy(harga = price)
+
+        saveProduct(updatedProduct)
     }
 
     private fun saveProduct(product: Product) {
@@ -277,12 +218,11 @@ class AddOrIncrementProductDialog : DialogFragment() {
             try {
                 val success = adminProductServiceRepository.addProduct(product)
                 if (success) {
-                    val message = if (isIncrementMode) {
-                        "Product successfully updated"
+                    val message = if (selectedProduct != null) {
+                        "Harga produk berhasil diperbarui"
                     } else {
-                        "Product successfully added"
+                        "Produk berhasil ditambahkan"
                     }
-
                     withContext(Dispatchers.Main) {
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                         listener?.onProductAdded()
@@ -290,7 +230,7 @@ class AddOrIncrementProductDialog : DialogFragment() {
                     }
                 } else {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(context, "Failed to save product", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Gagal menyimpan produk", Toast.LENGTH_SHORT).show()
                     }
                 }
             } catch (e: Exception) {

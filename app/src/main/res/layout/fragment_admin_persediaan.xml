@@ -42,7 +42,7 @@
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/button_background"
             android:drawableLeft="@android:drawable/ic_input_add"
-            android:text="Tambah Stok Baru"
+            android:text="Tambah Produk Baru"
             android:textColor="@color/button_text"
             app:cornerRadius="16dp"
             app:iconPadding="2dp"

@@ -91,8 +91,8 @@ class AdminPersediaanFragment : Fragment() {
 
     // NEW METHOD: Shows the add product dialog
     private fun showAddProductDialog() {
-        val dialog = AddOrIncrementProductDialog()
-        dialog.setProductActionListener(object : AddOrIncrementProductDialog.ProductActionListener {
+        val dialog = AddOrUpdateProductDialog()
+        dialog.setProductActionListener(object : AddOrUpdateProductDialog.ProductActionListener {
             override fun onProductAdded() {
                 refreshData() // Refresh your data display
             }

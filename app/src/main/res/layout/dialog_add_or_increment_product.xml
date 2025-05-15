@@ -54,27 +54,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/stock_delta_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:boxStrokeColor="@color/input_stroke"
-        app:hintTextColor="@color/input_stroke"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintTop_toBottomOf="@id/tv_current_stock"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_stock_delta"
-            android:layout_width="match_parent"
-            android:background="@drawable/card_bg"
-            android:layout_height="wrap_content"
-            android:hint="Jumlah stok yang akan ditambahkan"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <!-- These fields will be visible only when creating a new product -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/product_price_layout"
@@ -84,7 +63,7 @@
         app:boxStrokeColor="@color/input_stroke"
         app:hintTextColor="@color/input_stroke"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        app:layout_constraintTop_toBottomOf="@id/stock_delta_layout"
+        app:layout_constraintTop_toBottomOf="@id/tv_current_stock"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
