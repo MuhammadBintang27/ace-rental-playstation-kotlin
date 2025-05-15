@@ -9,7 +9,6 @@ import io.github.jan.supabase.postgrest.from
 
 class PenjualanRepository(private val context: Context) {
 
-
     // Fungsi untuk mendapatkan semua produk dari database
     suspend fun getAllProduk(): List<Produk> {
         return try {
@@ -41,6 +40,35 @@ class PenjualanRepository(private val context: Context) {
             true
         } catch (e: Exception) {
             Log.e("PenjualanRepository", "Error saving transaction: ${e.message}")
+            false
+        }
+    }
+
+    // Fungsi untuk memperbarui stok produk
+    suspend fun updateStokProduk(produkId: Int, jumlah: Int): Boolean {
+        return try {
+            // Fetch the current product
+            val produk = SupabaseClientInstance.getClient().from("produk")
+                .select { filter { eq("produk_id", produkId) } }
+                .decodeSingle<Produk>()
+
+            // Calculate new stock
+            val newStock = produk.stok_persediaan - jumlah
+
+            // Ensure stock doesn't go negative
+            if (newStock < 0) {
+                Log.e("PenjualanRepository", "Insufficient stock for produk_id: $produkId")
+                return false
+            }
+
+            // Update the stock
+            SupabaseClientInstance.getClient().from("produk")
+                .update(mapOf("stok_persediaan" to newStock)) {
+                    filter { eq("produk_id", produkId) }
+                }
+            true
+        } catch (e: Exception) {
+            Log.e("PenjualanRepository", "Error updating stock: ${e.message}")
             false
         }
     }

@@ -33,12 +33,13 @@ class PenjualanAdapter(
         fun bind(item: PenjualanItem, position: Int) {
             binding.textViewNamaProduk.text = item.produk.nama_produk
             binding.textViewHarga.text = "Rp ${formatPrice(item.produk.harga)}"
+            binding.textViewStok.text = "Stok: ${item.produk.stok_persediaan}"
             binding.editTextJumlah.text = if (item.jumlah > 0) item.jumlah.toString() else "0"
 
             // Set the appropriate image based on category
             when (item.produk.kategori) {
                 "Makanan" -> binding.imageViewProduk.setImageResource(R.drawable.ic_logo_fnb)
-                "Minuman" -> binding.imageViewProduk.setImageResource(R.drawable.ic_logo_beverage) // Default fallback
+                "Minuman" -> binding.imageViewProduk.setImageResource(R.drawable.ic_logo_beverage)
             }
 
             // Setup quantity change listener
@@ -53,9 +54,16 @@ class PenjualanAdapter(
 
             binding.buttonPlus.setOnClickListener {
                 val currentQuantity = item.jumlah
-                val newQuantity = currentQuantity + 1
-                binding.editTextJumlah.text = newQuantity.toString()
-                onQuantityChanged(position, newQuantity)
+                if (currentQuantity < item.produk.stok_persediaan) {
+                    val newQuantity = currentQuantity + 1
+                    binding.editTextJumlah.text = newQuantity.toString()
+                    onQuantityChanged(position, newQuantity)
+                } else {
+                    // Notify user if stock is insufficient
+                    binding.root.context.getString(R.string.stock_insufficient).also {
+                        android.widget.Toast.makeText(binding.root.context, it, android.widget.Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 

@@ -13,6 +13,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_playstation">Playstation</string>
+    <string name="stock_insufficient">Stok tidak mencukupi!</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="laporan_keuangan_title">Laporan Keuangan</string>
     <string name="total_balance_label">Total Balance (All Time)</string>

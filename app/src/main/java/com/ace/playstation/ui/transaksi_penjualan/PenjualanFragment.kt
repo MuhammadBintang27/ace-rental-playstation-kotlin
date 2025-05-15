@@ -36,10 +36,8 @@ class PenjualanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Setup ViewModel
         viewModel = ViewModelProvider(this).get(PenjualanViewModel::class.java)
 
-        // Setup RecyclerView
         adapter = PenjualanAdapter { position, jumlah ->
             viewModel.updateJumlahItem(position, jumlah)
         }
@@ -50,7 +48,6 @@ class PenjualanFragment : Fragment() {
             addItemDecoration(DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL))
         }
 
-        // Setup kategori filter
         binding.radioGroupKategori.setOnCheckedChangeListener { _, checkedId ->
             val kategori = when (checkedId) {
                 R.id.radioButtonSemua -> "semua"
@@ -61,20 +58,16 @@ class PenjualanFragment : Fragment() {
             viewModel.loadProduk(kategori)
         }
 
-        // Setup save button
         binding.buttonSimpan.setOnClickListener {
             showKonfirmasiDialog()
         }
 
-        // Observe ViewModel state
         viewModel.penjualanItems.observe(viewLifecycleOwner) { items ->
             adapter.submitList(items)
         }
 
         viewModel.totalPenjualan.observe(viewLifecycleOwner) { total ->
             binding.textViewTotal.text = "Total: Rp ${formatPrice(total)}"
-
-            // Enable/disable simpan button based on total
             binding.buttonSimpan.isEnabled = total > 0
         }
 
@@ -92,7 +85,7 @@ class PenjualanFragment : Fragment() {
     }
 
     private fun showKonfirmasiDialog() {
-        val selectedItems = viewModel.getAllCartItems() // We need to add this method to ViewModel
+        val selectedItems = viewModel.getAllCartItems()
 
         if (selectedItems.isEmpty()) {
             Toast.makeText(requireContext(), "Tidak ada item yang dipilih", Toast.LENGTH_SHORT).show()
@@ -113,7 +106,6 @@ class PenjualanFragment : Fragment() {
 
         konfirmasiAdapter.submitList(selectedItems)
 
-        // Use the same total that's shown at the bottom of the screen
         val totalHarga = viewModel.totalPenjualan.value ?: 0.0
         textViewTotal.text = "Total: Rp ${formatPrice(totalHarga)}"
 
