@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.ace.playstation.databinding.ItemTransactionAdminBinding
-import com.ace.playstation.model.AdminSummaryItem
+import com.ace.playstation.model.admin.AdminSummaryItem
 import java.text.NumberFormat
 import java.util.Locale
 

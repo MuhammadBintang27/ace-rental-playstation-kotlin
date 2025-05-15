@@ -1,8 +1,7 @@
-package com.ace.playstation.ui.admin.transaksi
+package com.ace.playstation.model.admin
 
 import androidx.lifecycle.*
-import com.ace.playstation.model.AdminSummaryItem
-import com.ace.playstation.repository.TransactionRepository
+import com.ace.playstation.repository.admin.TransactionRepository
 import kotlinx.coroutines.launch
 
 class AdminOverviewViewModel : ViewModel() {

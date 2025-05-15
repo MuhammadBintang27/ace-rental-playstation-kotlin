@@ -62,7 +62,7 @@ class BalanceFragment : Fragment(R.layout.fragment_admin_laporan_keuangan) {
 
     private fun setupMonthYearSpinners() {
         val months = (1..12).map { String.format("%02d", it) }
-        val years = (2020..2025).map { it.toString() }
+        val years = (2025..2030).map { it.toString() }
         vb.monthSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, months).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }

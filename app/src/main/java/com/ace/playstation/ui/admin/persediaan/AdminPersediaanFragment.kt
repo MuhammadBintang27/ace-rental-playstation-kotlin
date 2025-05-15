@@ -14,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ace.playstation.R
-import com.ace.playstation.adapters.ProductAdapter
+import com.ace.playstation.adapter.admin.ProductAdapter
+import com.ace.playstation.model.admin.Product
+import com.ace.playstation.repository.admin.AdminProductServiceRepository
 import kotlinx.coroutines.launch
 
 class AdminPersediaanFragment : Fragment() {
@@ -23,7 +25,7 @@ class AdminPersediaanFragment : Fragment() {
     private lateinit var productAdapter: ProductAdapter
     private lateinit var toggleGroup: RadioGroup
     private lateinit var warningText: TextView
-    private val productService = ProductService()
+    private val adminProductServiceRepository = AdminProductServiceRepository()
     private var allProducts = listOf<Product>()
     private lateinit var warningOverlay: View
     private lateinit var warningTextView: TextView
@@ -177,7 +179,7 @@ class AdminPersediaanFragment : Fragment() {
         swipeRefreshLayout.isRefreshing = true
         lifecycleScope.launch {
             try {
-                allProducts = productService.getAllProducts()
+                allProducts = adminProductServiceRepository.getAllProducts()
 
                 // Apply the current filter
                 when (toggleGroup.checkedRadioButtonId) {

@@ -1,13 +1,14 @@
-package com.ace.playstation.ui.admin.persediaan
+package com.ace.playstation.repository.admin
 
 import com.ace.playstation.auth.SupabaseClientInstance
+import com.ace.playstation.model.admin.Product
+import com.ace.playstation.model.admin.ProductDto
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import kotlinx.serialization.SerialName
 
-class ProductService {
+class AdminProductServiceRepository {
     private val client = SupabaseClientInstance.getClient()
 
     suspend fun getAllProducts(): List<Product> = withContext(Dispatchers.IO) {
@@ -128,14 +129,3 @@ class ProductService {
         }
     }
 }
-
-@kotlinx.serialization.Serializable
-data class ProductDto(
-    val produk_id: Int? = null,
-    val nama_produk: String,
-    val harga: Double,
-    val kategori: String,
-
-    @SerialName("stok_persediaan")
-    val stok_tersedia: Int
-)

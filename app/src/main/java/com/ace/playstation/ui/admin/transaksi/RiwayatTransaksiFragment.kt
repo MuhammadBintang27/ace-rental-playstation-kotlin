@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ace.playstation.R
 import com.ace.playstation.adapter.TransactionHistoryAdapterAdmin
 import com.ace.playstation.databinding.FragmentAdminRiwayatTransaksiBinding
+import com.ace.playstation.model.admin.AdminOverviewViewModel
 import com.ace.playstation.model.TransactionItem
-import com.ace.playstation.repository.TransactionRepository
+import com.ace.playstation.repository.admin.TransactionRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -69,13 +70,18 @@ class RiwayatTransaksiFragment : Fragment() {
         binding.spinnerTimeFilterAdmin.adapter = timeSpinnerAdapter
         binding.spinnerTimeFilterAdmin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                when (position) {
-                    0 -> applyCurrentFilters("all") // Semua
-                    1 -> applyCurrentFilters("today")
-                    2 -> applyCurrentFilters("week")
-                    3 -> applyCurrentFilters("month")
-                    4 -> applyCurrentFilters("year")
-                    5 -> binding.datePickerLayoutAdmin.visibility = View.VISIBLE
+                if (position == 5) {
+                    binding.datePickerLayoutAdmin.visibility = View.VISIBLE // show date picker
+                } else {
+                    val timeFilter = when (position) {
+                        0 -> "all"
+                        1 -> "today"
+                        2 -> "week"
+                        3 -> "month"
+                        4 -> "year"
+                        else -> "all"
+                    }
+                    applyCurrentFilters(timeFilter = timeFilter, categoryFilter = getSelectedCategory())
                 }
             }
 
@@ -99,15 +105,10 @@ class RiwayatTransaksiFragment : Fragment() {
         binding.spinnerCategoryFilterAdmin.adapter = categorySpinnerAdapter
         binding.spinnerCategoryFilterAdmin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val category = when (position) {
-                    0 -> TransactionRepository.CATEGORY_ALL
-                    1 -> TransactionRepository.CATEGORY_RENTAL
-                    2 -> TransactionRepository.CATEGORY_MAKANAN
-                    3 -> TransactionRepository.CATEGORY_MINUMAN
-                    else -> TransactionRepository.CATEGORY_ALL
-                }
-
-                applyCurrentFilters(getSelectedTimeFilter(), category)
+                applyCurrentFilters(
+                    timeFilter = getSelectedTimeFilter(),
+                    categoryFilter = getSelectedCategory()
+                )
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -119,12 +120,13 @@ class RiwayatTransaksiFragment : Fragment() {
     // Helper to get current time filter
     private fun getSelectedTimeFilter(): String {
         return when (binding.spinnerTimeFilterAdmin.selectedItemPosition) {
-            0 -> "today"
-            1 -> "week"
-            2 -> "month"
-            3 -> "year"
-            4 -> "custom"
-            else -> "today"
+            0 -> "all"
+            1 -> "today"
+            2 -> "week"
+            3 -> "month"
+            4 -> "year"
+            5 -> "custom"
+            else -> "all"
         }
     }
 
@@ -140,7 +142,6 @@ class RiwayatTransaksiFragment : Fragment() {
     }
 
     // Apply both filters
-
     private fun applyCurrentFilters(
         timeFilter: String = getSelectedTimeFilter(),
         categoryFilter: String = getSelectedCategory()
@@ -204,7 +205,7 @@ class RiwayatTransaksiFragment : Fragment() {
             val from = binding.tvDateFromAdmin.text.toString()
             val to   = binding.tvDateToAdmin.text.toString()
             if (from.isNotBlank() && to.isNotBlank()) {
-                viewModel.filterTransactionsByDateRange(from, to)
+                applyCurrentFilters(timeFilter = "custom", categoryFilter = getSelectedCategory())
                 binding.datePickerLayoutAdmin.visibility = View.GONE
             }
         }

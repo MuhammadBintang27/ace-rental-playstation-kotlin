@@ -14,7 +14,7 @@ import com.ace.playstation.R
 import com.ace.playstation.adapter.TransactionHistoryAdapter
 import com.ace.playstation.databinding.FragmentTransactionHistoryBinding
 import com.ace.playstation.model.TransactionItem
-import com.ace.playstation.repository.TransactionRepository
+import com.ace.playstation.repository.admin.TransactionRepository
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

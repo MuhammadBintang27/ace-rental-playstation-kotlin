@@ -1,8 +1,8 @@
-package com.ace.playstation.repository
+package com.ace.playstation.repository.admin
 
 import android.util.Log
 import com.ace.playstation.auth.SupabaseClientInstance
-import com.ace.playstation.model.AdminSummaryItem
+import com.ace.playstation.model.admin.AdminSummaryItem
 import com.ace.playstation.model.Produk
 import com.ace.playstation.model.TransactionItem
 import com.ace.playstation.model.TransaksiPenjualan
@@ -255,7 +255,7 @@ class TransactionRepository {
         Log.d("TransactionRepo", "Filtering by category: $category")
 
         return when (category) {
-            CATEGORY_RENTAL -> transactions.filter { it.type == "RENTAL" }
+            CATEGORY_RENTAL -> transactions.filter { it.type.equals("RENTAL", ignoreCase = true) }
             CATEGORY_MAKANAN -> transactions.filter { it.category.equals("MAKANAN", ignoreCase = true) }
             CATEGORY_MINUMAN -> transactions.filter { it.category.equals("MINUMAN", ignoreCase = true) }
             else -> transactions
@@ -447,9 +447,10 @@ class TransactionRepository {
             val entries = map.entries.filter { (key, _) ->
                 when (categoryFilter) {
                     CATEGORY_ALL    -> true
-                    CATEGORY_RENTAL -> key.second.equals("RENTAL", true)
-                    CATEGORY_MAKANAN-> key.second.equals("MAKANAN", true)
-                    CATEGORY_MINUMAN-> key.second.equals("MINUMAN", true)
+                    CATEGORY_RENTAL -> key.second.equals("TETAP", true) or
+                            key.second.equals("PERSONAL", true)
+                    CATEGORY_MAKANAN -> key.second.equals("MAKANAN", true)
+                    CATEGORY_MINUMAN -> key.second.equals("MINUMAN", true)
                     else            -> true
                 }
             }
