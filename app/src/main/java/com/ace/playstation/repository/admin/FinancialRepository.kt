@@ -1,4 +1,4 @@
-package com.ace.playstation.repository
+package com.ace.playstation.repository.admin
 
 import com.ace.playstation.auth.SupabaseClientInstance
 import com.ace.playstation.model.FinancialEntry

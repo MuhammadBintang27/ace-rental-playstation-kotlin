@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
@@ -12,51 +13,52 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/tv_heading_persediaan"
+            android:id="@+id/tv_heading_pengeluaran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Stok Persediaan"
+            android:text="Pengeluaran"
             android:textColor="@color/input_stroke"
             android:textSize="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_subheading_persediaan"
+            android:id="@+id/tv_subheading_pengeluaran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:text="Persediaan Makanan &amp; Minuman"
+            android:layout_marginTop="8dp"
+            android:text="Pengeluaran Produk &amp; lainnya"
             android:textColor="@color/input_stroke"
             android:textSize="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_heading_persediaan" />
+            app:layout_constraintTop_toBottomOf="@id/tv_heading_pengeluaran" />
 
         <Button
-            android:id="@+id/btn_tambah_persediaan"
+            android:id="@+id/btn_tambah_pengeluaran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:backgroundTint="@color/button_background"
             android:drawableLeft="@android:drawable/ic_input_add"
-            android:text="Tambah Stok Baru"
+            android:text="Tambah Pengeluaran"
             android:textColor="@color/button_text"
             app:cornerRadius="16dp"
             app:iconPadding="2dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_subheading_persediaan" />
+            app:layout_constraintTop_toBottomOf="@id/tv_subheading_pengeluaran" />
 
+<!--        &lt;!&ndash; -->
         <LinearLayout
-            android:id="@+id/filter_container"
+            android:id="@+id/pengeluaran_filter_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/btn_tambah_persediaan"
+            app:layout_constraintTop_toBottomOf="@id/btn_tambah_pengeluaran"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -68,7 +70,7 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/radio_all"
+                    android:id="@+id/radio_pengeluaran_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Semua"
@@ -76,22 +78,28 @@
                     android:textColor="@color/input_stroke" />
 
                 <RadioButton
-                    android:id="@+id/radio_makanan"
+                    android:id="@+id/radio_pengeluaran_makanan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Makanan"
                     android:textColor="@color/input_stroke" />
 
                 <RadioButton
-                    android:id="@+id/radio_minuman"
+                    android:id="@+id/radio_pengeluaran_minuman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Minuman"
                     android:textColor="@color/input_stroke" />
+                <RadioButton
+                    android:id="@+id/radio_pengeluaran_lainnya"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lainnya"
+                    android:textColor="@color/input_stroke" />
             </RadioGroup>
 
             <ImageButton
-                android:id="@+id/btn_sort"
+                android:id="@+id/btn_pengeluaran_sort"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tooltipText="Filter"
@@ -100,19 +108,20 @@
                 android:contentDescription="Sort"
                 android:src="@drawable/ic_lock" />
         </LinearLayout>
+<!--&ndash;&gt;-->
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewProduk"
+            android:id="@+id/recyclerViewPengeluaran"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            app:layout_constraintTop_toBottomOf="@id/filter_container"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/warningOverlay" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pengeluaran_filter_container" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!--<androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/warningOverlay"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -124,7 +133,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/recyclerViewProduk">
+            app:layout_constraintTop_toBottomOf="@id/recyclerViewPengeluaran">
 
             <TextView
                 android:id="@+id/tv_persediaan_warnings"
@@ -150,7 +159,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+        -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

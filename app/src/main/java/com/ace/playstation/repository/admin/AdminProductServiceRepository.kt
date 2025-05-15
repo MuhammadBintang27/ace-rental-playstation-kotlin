@@ -102,6 +102,7 @@ class AdminProductServiceRepository {
                     client.from("produk")
                         .update({
                             set("stok_persediaan", product.stok_persediaan)
+                            set("harga", product.harga)
                         }) {
                             filter {
                                 eq("nama_produk", product.nama_produk)

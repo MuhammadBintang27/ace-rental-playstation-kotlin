@@ -153,15 +153,21 @@ class AddOrIncrementProductDialog : DialogFragment() {
         val dialogTitle = view.findViewById<TextView>(R.id.tv_dialog_title)
         val currentStockTextView = view.findViewById<TextView>(R.id.tv_current_stock)
         val priceLayout = view.findViewById<TextInputLayout>(R.id.product_price_layout)
+        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
         val categoryGroup = view.findViewById<RadioGroup>(R.id.rg_product_category)
         val btnSave = view.findViewById<Button>(R.id.btn_save)
 
-        dialogTitle.text = "Tambah Stok"
+        dialogTitle.text = "Tambah Stok & Ubah Harga"
         currentStockTextView.visibility = View.VISIBLE
         currentStockTextView.text = "Current stock: ${selectedProduct?.stok_persediaan ?: 0}"
-        priceLayout.visibility = View.GONE
+
+        // Enable price change
+        priceLayout.visibility = View.VISIBLE
         categoryGroup.visibility = View.GONE
-        btnSave.text = "Add to Stock"
+        btnSave.text = "Update"
+
+        // Set current price as default in price input
+        priceInput.setText(selectedProduct?.harga?.toString() ?: "")
     }
 
     private fun validateInputs(view: View): Boolean {
@@ -184,7 +190,7 @@ class AddOrIncrementProductDialog : DialogFragment() {
 
         try {
             val stockDelta = stockDeltaString.toInt()
-            if (stockDelta <= 0) {
+            if (stockDelta < 0) {
                 Toast.makeText(context, "Stock amount must be greater than 0", Toast.LENGTH_SHORT).show()
                 return false
             }
@@ -223,11 +229,19 @@ class AddOrIncrementProductDialog : DialogFragment() {
         }
 
         val stockDeltaInput = view.findViewById<TextInputEditText>(R.id.et_stock_delta)
+        val priceInput = view.findViewById<TextInputEditText>(R.id.et_product_price)
         val stockDelta = stockDeltaInput.text.toString().toInt()
+
+        var updatedPrice = selectedProduct!!.harga
+        val priceString = priceInput.text.toString().trim()
+        if (priceString.isNotEmpty()) {
+            updatedPrice = priceString.toDouble()
+        }
 
         // Create a new product with updated stock
         val updatedProduct = selectedProduct!!.copy(
-            stok_persediaan = selectedProduct!!.stok_persediaan + stockDelta
+            stok_persediaan = selectedProduct!!.stok_persediaan + stockDelta,
+            harga = updatedPrice
         )
 
         saveProduct(updatedProduct)
@@ -264,7 +278,7 @@ class AddOrIncrementProductDialog : DialogFragment() {
                 val success = adminProductServiceRepository.addProduct(product)
                 if (success) {
                     val message = if (isIncrementMode) {
-                        "Stock successfully added"
+                        "Product successfully updated"
                     } else {
                         "Product successfully added"
                     }

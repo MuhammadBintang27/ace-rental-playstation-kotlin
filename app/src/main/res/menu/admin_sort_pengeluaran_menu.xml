@@ -1,0 +1,22 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sort_name_asc"
+        android:title="Nama (A-Z)" />
+    <item
+        android:id="@+id/sort_name_desc"
+        android:title="Nama (Z-A)" />
+    <item
+        android:id="@+id/sort_price_asc"
+        android:title="Nominal (Rendah-Tinggi)" />
+    <item
+        android:id="@+id/sort_price_desc"
+        android:title="Nominal (Tinggi-Rendah)" />
+    <item
+        android:id="@+id/sort_date_desc"
+        android:title="Tanggal Terbaru" />
+    <item
+        android:id="@+id/sort_date_asc"
+        android:title="Tanggal Terlama" />
+</menu>

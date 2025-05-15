@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:id="@+id/cardContainerPengeluaranAdmin"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvNamaPengeluaranAdmin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/input_stroke"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Listrik" />
+
+            <TextView
+                android:id="@+id/tvJumlahPengeluaranAdmin"
+                android:layout_width="wrap_content"
+                android:textColor="@color/input_stroke"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                tools:text="15 Pcs" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvKategoriPengeluaranAdmin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/input_stroke"
+                android:textSize="16sp"
+                tools:text="Lainnya" />
+
+            <TextView
+                android:id="@+id/tvPengeluaranAmountAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/input_stroke"
+                android:textStyle="bold"
+                tools:text="Rp 25,000" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTanggalAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/input_stroke"
+            android:textSize="14sp"
+            tools:text="04/30/2025" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

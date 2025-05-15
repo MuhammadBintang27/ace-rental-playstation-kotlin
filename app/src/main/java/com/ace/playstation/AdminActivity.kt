@@ -38,6 +38,7 @@ class AdminActivity : AppCompatActivity() {
                 R.id.nav_admin_riwayat_transaksi,
                 R.id.nav_admin_laporan_keuangan,
                 R.id.nav_admin_persediaan,
+                R.id.nav_admin_pengeluaran,
                 R.id.nav_admin_logout,),
             drawerLayout
         )
