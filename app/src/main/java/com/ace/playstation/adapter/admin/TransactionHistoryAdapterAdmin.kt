@@ -1,10 +1,11 @@
-package com.ace.playstation.adapter
+package com.ace.playstation.adapter.admin
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.ace.playstation.R
 import com.ace.playstation.databinding.ItemTransactionAdminBinding
 import com.ace.playstation.model.admin.AdminSummaryItem
 import java.text.NumberFormat
@@ -40,6 +41,16 @@ class TransactionHistoryAdapterAdmin :
             b.tvDetailsAdmin.text = countLabel
 
             b.tvAmountAdmin.text = fmt.format(item.totalIncome)
+
+            // Set background based on transaction type and category
+            val backgroundResId = when (item.category.uppercase()) {
+                "Tetap"      -> R.drawable.card_bg_rental
+                "MAKANAN"     -> R.drawable.card_bg_food
+                "MINUMAN"     -> R.drawable.card_bg_drink
+                else          -> R.drawable.card_bg
+            }
+            b.root.setBackgroundResource(backgroundResId)
+
         }
     }
 

@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ace.playstation.R
-import com.ace.playstation.adapter.TransactionHistoryAdapterAdmin
+import com.ace.playstation.adapter.admin.TransactionHistoryAdapterAdmin
 import com.ace.playstation.databinding.FragmentAdminRiwayatTransaksiBinding
 import com.ace.playstation.model.admin.AdminOverviewViewModel
 import com.ace.playstation.model.TransactionItem
