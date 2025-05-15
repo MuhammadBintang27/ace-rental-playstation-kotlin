@@ -1,4 +1,4 @@
-package com.ace.playstation.adapters
+package com.ace.playstation.adapter.admin
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ace.playstation.R
-import com.ace.playstation.ui.admin.persediaan.Product
+import com.ace.playstation.model.admin.Product
 
 class ProductAdapter(private val context: Context) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
 

@@ -15,6 +15,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import com.ace.playstation.R
+import com.ace.playstation.model.admin.Product
+import com.ace.playstation.repository.admin.AdminProductServiceRepository
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +30,7 @@ class AddOrIncrementProductDialog : DialogFragment() {
     }
 
     private var listener: ProductActionListener? = null
-    private val productService = ProductService()
+    private val adminProductServiceRepository = AdminProductServiceRepository()
     private var products: List<Product> = emptyList()
     private var selectedProduct: Product? = null
     private var isIncrementMode = false
@@ -61,7 +63,7 @@ class AddOrIncrementProductDialog : DialogFragment() {
         // Load products for autocomplete
         lifecycleScope.launch {
             try {
-                products = productService.getAllProducts()
+                products = adminProductServiceRepository.getAllProducts()
 
                 // Create adapter for product names
                 val productNames = products.map { it.nama_produk }
@@ -259,7 +261,7 @@ class AddOrIncrementProductDialog : DialogFragment() {
     private fun saveProduct(product: Product) {
         lifecycleScope.launch {
             try {
-                val success = productService.addProduct(product)
+                val success = adminProductServiceRepository.addProduct(product)
                 if (success) {
                     val message = if (isIncrementMode) {
                         "Stock successfully added"

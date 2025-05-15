@@ -24,6 +24,3 @@ object SupabaseClientInstance {
         return client
     }
 }
-
-
-

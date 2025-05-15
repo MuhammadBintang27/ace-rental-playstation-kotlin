@@ -1,4 +1,4 @@
-package com.ace.playstation.model
+package com.ace.playstation.model.admin
 
 data class AdminSummaryItem(
     val name: String,                    // produk.nama_produk or "PlayStation Unit #X"

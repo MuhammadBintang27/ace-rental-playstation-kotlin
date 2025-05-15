@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ace.playstation.model.TransactionItem
-import com.ace.playstation.repository.TransactionRepository
+import com.ace.playstation.repository.admin.TransactionRepository
 import kotlinx.coroutines.launch
 
 class TransactionHistoryViewModel : ViewModel() {
