@@ -10,6 +10,7 @@ data class Produk(
     val nama_produk: String,
     val harga: Double,
     val kategori: String, // "makanan" atau "minuman"
+    val stok_persediaan: Int // Added stock field
 )
 
 // Model untuk Transaksi Penjualan

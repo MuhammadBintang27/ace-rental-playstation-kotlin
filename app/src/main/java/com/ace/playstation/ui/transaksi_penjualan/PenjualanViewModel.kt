@@ -20,10 +20,7 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
     private val _produkList = MutableLiveData<List<Produk>>()
     val produkList: LiveData<List<Produk>> = _produkList
 
-    // Maintain a master list of all cart items across categories
     private val _cartItems = mutableMapOf<Int, PenjualanItem>()
-
-    // The filtered items to display based on current category
     private val _penjualanItems = MutableLiveData<List<PenjualanItem>>()
     val penjualanItems: LiveData<List<PenjualanItem>> = _penjualanItems
 
@@ -39,12 +36,10 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
     private var _selectedCategory = MutableLiveData<String>("semua")
     val selectedCategory: LiveData<String> = _selectedCategory
 
-    // Inisialisasi dengan mengambil semua produk
     init {
         loadProduk()
     }
 
-    // Fungsi untuk memuat produk berdasarkan kategori
     fun loadProduk(kategori: String = "semua") {
         viewModelScope.launch {
             try {
@@ -55,8 +50,6 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
                 }
                 _produkList.value = produkList
                 _selectedCategory.value = kategori
-
-                // Update the displayed items based on the selected category
                 updateDisplayedItems(produkList, kategori)
             } catch (e: Exception) {
                 _errorMessage.value = "Failed to load products: ${e.message}"
@@ -64,56 +57,44 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    // Update the displayed items while preserving quantities
     private fun updateDisplayedItems(produkList: List<Produk>, kategori: String) {
-        // Create displayed items from the product list, preserving quantities from cart
         val displayItems = produkList.map { produk ->
-            // If this product is already in the cart, use that item with its quantity
             _cartItems[produk.produk_id] ?: PenjualanItem(produk)
         }
-
-        // Update the displayed items
         _penjualanItems.value = displayItems
     }
 
-    // Fungsi untuk memperbarui jumlah item yang dibeli
     fun updateJumlahItem(position: Int, jumlah: Int) {
         val currentItems = _penjualanItems.value?.toMutableList() ?: mutableListOf()
         if (position >= 0 && position < currentItems.size) {
             val item = currentItems[position]
-            if (jumlah >= 0) {
+            if (jumlah >= 0 && jumlah <= item.produk.stok_persediaan) {
                 item.jumlah = jumlah
                 item.totalHarga = jumlah * item.produk.harga
                 currentItems[position] = item
 
-                // Update the master cart with this item
                 if (jumlah > 0) {
                     _cartItems[item.produk.produk_id] = item
                 } else {
-                    // Remove item from cart if quantity is 0
                     _cartItems.remove(item.produk.produk_id)
                 }
 
                 _penjualanItems.value = currentItems
-
-                // Recalculate total
                 calculateTotal()
+            } else if (jumlah > item.produk.stok_persediaan) {
+                _errorMessage.value = "Jumlah melebihi stok yang tersedia untuk ${item.produk.nama_produk}"
             }
         }
     }
 
-    // Fungsi untuk menghitung total penjualan
     private fun calculateTotal() {
-        // Calculate total from the master cart items, not just displayed items
         val total = _cartItems.values.sumOf { it.totalHarga }
         _totalPenjualan.value = total
     }
 
-    // Fungsi untuk menyimpan transaksi penjualan
     fun saveTransaksi() {
         viewModelScope.launch {
             try {
-                // Use cart items instead of displayed items
                 val itemsToSave = _cartItems.values.toList()
 
                 if (itemsToSave.isEmpty()) {
@@ -121,8 +102,16 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
                     return@launch
                 }
 
+                // Check stock availability
+                for (item in itemsToSave) {
+                    if (item.jumlah > item.produk.stok_persediaan) {
+                        _errorMessage.value = "Stok tidak mencukupi untuk ${item.produk.nama_produk}"
+                        return@launch
+                    }
+                }
+
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-                val currentTime = dateFormat.format(Date()) // Format waktu sekarang sebagai String
+                val currentTime = dateFormat.format(Date())
 
                 var allSuccess = true
 
@@ -131,12 +120,19 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
                         produk_id = item.produk.produk_id,
                         jumlah = item.jumlah,
                         total_harga = item.totalHarga,
-                        created_at = currentTime // Simpan sebagai string
+                        created_at = currentTime
                     )
 
                     val saveSuccess = repository.saveTransaksiPenjualan(transaksi)
 
-                    if (!saveSuccess) {
+                    if (saveSuccess) {
+                        // Update stock
+                        val stockUpdateSuccess = repository.updateStokProduk(item.produk.produk_id, item.jumlah)
+                        if (!stockUpdateSuccess) {
+                            allSuccess = false
+                            _errorMessage.value = "Gagal memperbarui stok untuk ${item.produk.nama_produk}"
+                        }
+                    } else {
                         allSuccess = false
                     }
                 }
@@ -144,9 +140,7 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
                 _saveStatus.value = allSuccess
 
                 if (allSuccess) {
-                    // Clear cart
                     _cartItems.clear()
-                    // Reset displayed items
                     loadProduk(_selectedCategory.value ?: "semua")
                 }
             } catch (e: Exception) {
@@ -155,7 +149,7 @@ class PenjualanViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
     }
-    // Add this method to PenjualanViewModel
+
     fun getAllCartItems(): List<PenjualanItem> {
         return _cartItems.values.toList()
     }
