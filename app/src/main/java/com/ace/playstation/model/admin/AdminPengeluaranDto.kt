@@ -4,7 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PengeluaranDto(
-    val pengeluaran_id: Int,
     val nama_pengeluaran: String?,
     val kategori: String?,
     val tanggal: String?,
@@ -14,7 +13,6 @@ data class PengeluaranDto(
 )
 
 data class Pengeluaran(
-    val id: Int,
     val nama: String,
     val kategori: String,
     val tanggal: String,

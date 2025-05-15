@@ -100,11 +100,6 @@ class AdminPersediaanFragment : Fragment() {
         dialog.show(childFragmentManager, "AddOrIncrementProductDialog")
     }
 
-//    // NEW METHOD: Implementing AddProductListener interface
-//    override fun onProductAdded() {
-//        refreshData()
-//    }
-
     private fun loadProducts() {
         refreshData()
     }

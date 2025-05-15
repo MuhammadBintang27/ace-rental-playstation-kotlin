@@ -42,11 +42,28 @@ class AdminPengeluaranFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         swipeRefreshLayout.setOnRefreshListener {
-            fetchAndDisplay()
+            refreshData()
         }
 
+        // Set up add stock button click
+        val btnAdd = view.findViewById<View>(R.id.btn_tambah_pengeluaran)
+        btnAdd?.setOnClickListener {
+            showAddPengeluaranDialog()
+        }
+
+
         setupFilters(view)
-        fetchAndDisplay()
+        refreshData()
+    }
+
+    private fun showAddPengeluaranDialog() {
+        val dialog = AddPengeluaranDialog()
+        dialog.setPengeluaranActionListener(object : AddPengeluaranDialog.PengeluaranActionListener {
+            override fun onPengeluaranAdded() {
+                refreshData() // Refresh data when new expense is added
+            }
+        })
+        dialog.show(childFragmentManager, "AddPengeluaranDialog")
     }
 
     private fun setupFilters(view: View) {
@@ -60,7 +77,7 @@ class AdminPengeluaranFragment : Fragment() {
                 R.id.radio_pengeluaran_lainnya -> "Lainnya"
                 else -> null
             }
-            fetchAndDisplay()
+            refreshData()
         }
 
         btnSort.setOnClickListener { v ->
@@ -73,7 +90,7 @@ class AdminPengeluaranFragment : Fragment() {
                         R.id.sort_price_asc -> { currentSort = "jumlah_pengeluaran"; descending = false }
                         R.id.sort_price_desc -> { currentSort = "jumlah_pengeluaran"; descending = true }
                     }
-                    fetchAndDisplay()
+                    refreshData()
                     true
                 }
                 show()
@@ -81,7 +98,7 @@ class AdminPengeluaranFragment : Fragment() {
         }
     }
 
-    private fun fetchAndDisplay() {
+    private fun refreshData() {
         swipeRefreshLayout.isRefreshing = true
         lifecycleScope.launch {
             val pengeluaranList = repository.fetchPengeluaran(
@@ -91,7 +108,6 @@ class AdminPengeluaranFragment : Fragment() {
             )
             adapter.updateData(pengeluaranList)
             swipeRefreshLayout.isRefreshing = false
-
         }
     }
 }

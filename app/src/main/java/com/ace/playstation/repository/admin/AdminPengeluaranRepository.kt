@@ -25,10 +25,8 @@ class AdminPengeluaranRepository {
                     order(sortBy, if (descending) Order.DESCENDING else Order.ASCENDING)
                     limit(10)
                 }
-
             query.decodeList<PengeluaranDto>().map {
                 Pengeluaran(
-                    id = it.pengeluaran_id,
                     nama = it.nama_pengeluaran ?: "-",
                     kategori = it.kategori ?: "Lainnya",
                     tanggal = it.tanggal ?: "-",
@@ -40,6 +38,17 @@ class AdminPengeluaranRepository {
         } catch (e: Exception) {
             e.printStackTrace()
             emptyList()
+        }
+    }
+
+    suspend fun addPengeluaran(pengeluaran: PengeluaranDto): Boolean = withContext(Dispatchers.IO) {
+        return@withContext try {
+            client.from("pengeluaran")
+                .insert(pengeluaran)
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
         }
     }
 }
