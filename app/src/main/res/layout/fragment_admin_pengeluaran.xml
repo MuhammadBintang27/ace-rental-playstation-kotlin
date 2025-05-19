@@ -103,7 +103,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:tooltipText="Filter"
-                android:layout_marginStart="8dp"
+                android:padding="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Sort"
                 android:src="@drawable/ic_filter" />
