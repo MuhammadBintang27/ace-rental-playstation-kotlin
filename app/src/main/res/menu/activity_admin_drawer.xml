@@ -18,19 +18,19 @@
 
         <item
             android:id="@+id/nav_admin_laporan_keuangan"
-            android:icon="@drawable/logo_ps"
+            android:icon="@drawable/ic_laporan_keuangan"
             android:title="Laporan Keuangan"
             android:textAppearance="@style/NavigationMenuStyle"/>
 
         <item
             android:id="@+id/nav_admin_riwayat_transaksi"
-            android:icon="@drawable/logo_ps"
+            android:icon="@drawable/ic_riwayat_transaksi_admin"
             android:title="Riwayat Transaksi"
             android:textAppearance="@style/NavigationMenuStyle"/>
 
         <item
             android:id="@+id/nav_admin_persediaan"
-            android:icon="@drawable/logo_ps"
+            android:icon="@drawable/ic_persediaan_admin"
             android:title="Persediaan"
             android:textAppearance="@style/NavigationMenuStyle"/>
         <item
