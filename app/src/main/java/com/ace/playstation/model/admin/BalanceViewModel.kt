@@ -1,10 +1,9 @@
-package com.ace.playstation.viewmodel
+package com.ace.playstation.model.admin
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ace.playstation.model.FinancialEntry
 import com.ace.playstation.repository.admin.FinancialRepository
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock

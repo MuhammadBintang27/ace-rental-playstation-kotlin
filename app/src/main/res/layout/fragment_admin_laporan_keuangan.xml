@@ -179,6 +179,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@drawable/card_bg"
+            android:padding="4dp"
             android:layout_marginBottom="8dp">
 
             <Button
@@ -187,9 +189,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/seven_days"
                 android:textSize="14sp"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#4CAF50"
-                android:layout_marginEnd="8dp"/>
+                android:background="@drawable/card_bg"
+                android:textColor="@color/input_stroke"
+                android:layout_marginHorizontal="8dp"/>
 
             <Button
                 android:id="@+id/bulan_button"
@@ -197,8 +199,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/thirty_days"
                 android:textSize="14sp"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#4CAF50"
+                android:textColor="@color/input_stroke"
+                android:background="@drawable/card_bg"
                 android:layout_marginEnd="8dp"/>
 
             <Button
@@ -207,8 +209,9 @@
                 android:layout_height="wrap_content"
                 android:text="@string/three_hundred_sixty_five_days"
                 android:textSize="14sp"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#4CAF50"/>
+                android:background="@drawable/card_bg"
+                android:textColor="@color/input_stroke"
+                />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

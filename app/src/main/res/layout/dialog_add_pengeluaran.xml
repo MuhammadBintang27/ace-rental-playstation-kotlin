@@ -78,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_bg"
+            android:popupBackground="@color/card_background"
             android:hint="Nama produk / pengeluaran"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>

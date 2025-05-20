@@ -1,4 +1,4 @@
-package com.ace.playstation.model
+package com.ace.playstation.model.admin
 
 data class FinancialEntry(
     val date: String,    // "YYYY-MM-DD"

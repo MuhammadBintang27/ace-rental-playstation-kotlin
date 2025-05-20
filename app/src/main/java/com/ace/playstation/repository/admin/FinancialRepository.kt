@@ -1,7 +1,7 @@
 package com.ace.playstation.repository.admin
 
 import com.ace.playstation.auth.SupabaseClientInstance
-import com.ace.playstation.model.FinancialEntry
+import com.ace.playstation.model.admin.FinancialEntry
 import io.github.jan.supabase.postgrest.from
 import io.github.jan.supabase.postgrest.query.Order
 import kotlinx.coroutines.Dispatchers

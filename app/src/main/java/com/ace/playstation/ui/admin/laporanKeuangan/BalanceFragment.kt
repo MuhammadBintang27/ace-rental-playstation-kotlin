@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.ace.playstation.R
 import com.ace.playstation.databinding.FragmentAdminLaporanKeuanganBinding
-import com.ace.playstation.viewmodel.BalanceViewModel
+import com.ace.playstation.model.admin.BalanceViewModel
+import com.ace.playstation.model.admin.FinancialEntry
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -117,7 +118,7 @@ class BalanceFragment : Fragment(R.layout.fragment_admin_laporan_keuangan) {
         }
     }
 
-    private fun drawChart(data: List<com.ace.playstation.model.FinancialEntry>) {
+    private fun drawChart(data: List<FinancialEntry>) {
         val entriesIncome = data.mapIndexed { i, e -> Entry(i.toFloat(), e.income.toFloat()) }
         val entriesOutcome = data.mapIndexed { i, e -> Entry(i.toFloat(), e.outcome.toFloat()) }
 
