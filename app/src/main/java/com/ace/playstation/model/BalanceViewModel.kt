@@ -38,9 +38,9 @@ class BalanceViewModel : ViewModel() {
     val selectedMonth: LiveData<Int> = _selectedMonth
 
     init {
-        val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
-        _selectedYear.value = now.year
-        _selectedMonth.value = now.monthNumber
+//        val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()).date
+//        _selectedYear.value = now.year
+//        _selectedMonth.value = now.monthNumber
         refreshAll()
     }
 

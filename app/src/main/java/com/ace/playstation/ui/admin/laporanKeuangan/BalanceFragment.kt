@@ -61,34 +61,58 @@ class BalanceFragment : Fragment(R.layout.fragment_admin_laporan_keuangan) {
     }
 
     private fun setupMonthYearSpinners() {
-        val months = (1..12).map { String.format("%02d", it) }
-        val years = (2025..2030).map { it.toString() }
-        vb.monthSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, months).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        }
-        vb.yearSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, years).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        val monthHint = "Month"
+        val yearHint = "Year"
+
+        val months = listOf(monthHint) + (1..12).map { String.format("%02d", it) }
+        val years = listOf(yearHint) + (2025..2030).map { it.toString() }
+
+        vb.monthSpinner.adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, months).apply {
+            setDropDownViewResource(R.layout.spinner_dropdown_item)
         }
 
+        vb.yearSpinner.adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, years).apply {
+            setDropDownViewResource(R.layout.spinner_dropdown_item)
+        }
+
+        vb.monthSpinner.setSelection(0)
+        vb.yearSpinner.setSelection(0)
+
+        // Observe selected month/year and update spinners (offset by +1 because of hint)
         vm.selectedMonth.observe(viewLifecycleOwner) { month ->
-            vb.monthSpinner.setSelection(month - 1)
+            if (month in 1..12) vb.monthSpinner.setSelection(month)
         }
         vm.selectedYear.observe(viewLifecycleOwner) { year ->
-            vb.yearSpinner.setSelection(years.indexOf(year.toString()))
+            val index = years.indexOf(year.toString())
+
+            if (index > 0) vb.yearSpinner.setSelection(index)
         }
 
         vb.monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val year = vb.yearSpinner.selectedItem.toString().toInt()
-                vm.setMonthYear(year, position + 1)
+                val selectedYearIndex = vb.yearSpinner.selectedItemPosition
+
+                if (position == 0 || selectedYearIndex == 0) return // Skip if hint is selected
+
+                val year = years[selectedYearIndex].toInt()
+                val month = months[position].toInt()
+                vm.setMonthYear(year, month)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+
         vb.yearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val month = vb.monthSpinner.selectedItem.toString().toInt()
-                vm.setMonthYear(years[position].toInt(), month)
+                val selectedMonthIndex = vb.monthSpinner.selectedItemPosition
+
+                if (position == 0 || selectedMonthIndex == 0) return // Skip if hint is selected
+
+                val year = years[position].toInt()
+                val month = months[selectedMonthIndex].toInt()
+                vm.setMonthYear(year, month)
             }
+
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
