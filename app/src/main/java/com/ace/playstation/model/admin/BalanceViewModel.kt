@@ -75,12 +75,12 @@ class BalanceViewModel : ViewModel() {
     fun loadMonthlySummary() = viewModelScope.launch {
         val year = _selectedYear.value ?: return@launch
         val month = _selectedMonth.value ?: return@launch
+
         // Reset to 0 to avoid stale data
         _monthlyIncome.value = 0.0
         _monthlyOutcome.value = 0.0
         _monthlyIncome.value = repo.getMonthlyIncome(year, month)
         _monthlyOutcome.value = repo.getMonthlyOutcome(year, month)
         _monthlyTotal.value = (_monthlyIncome.value ?: 0.0) - (_monthlyOutcome.value ?: 0.0)
-        android.util.Log.d("BalanceViewModel", "Month: $month, Year: $year, Income: ${_monthlyIncome.value}, Outcome: ${_monthlyOutcome.value}")
     }
 }

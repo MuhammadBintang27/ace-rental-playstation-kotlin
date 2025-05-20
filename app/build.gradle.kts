@@ -71,7 +71,7 @@ dependencies {
     implementation("io.ktor:ktor-client-android:$ktorVersion")
     implementation("io.ktor:ktor-client-core:$ktorVersion")
     implementation("io.ktor:ktor-utils:$ktorVersion")
-    implementation ("io.github.jan-tennert.supabase:gotrue-kt:2.6.0")
+//    implementation ("io.github.jan-tennert.supabase:gotrue-kt:2.6.0")
 //    implementation ("io.github.jan-tennert.supabase:compose-auth:1.4.3")
 
 //    implementation("com.google.dagger:hilt-android:2.5.0")

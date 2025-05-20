@@ -43,8 +43,10 @@ class FinancialRepository {
             .from("laporan_keuangan")
             .select {
                 filter {
-                    gte("tanggal", from)
-                    lte("tanggal", to)
+                    and {
+                        gte("tanggal", from)
+                        lte("tanggal", to)
+                    }
                 }
                 order("tanggal", Order.ASCENDING)
             }
@@ -63,13 +65,16 @@ class FinancialRepository {
     suspend fun getMonthlyIncome(year: Int, month: Int): Double = withContext(Dispatchers.IO) {
         val from = String.format("%02d/01/%04d", month, year) // e.g., 04/01/2025
         val to = String.format("%02d/%02d/%04d", month, getLastDayOfMonth(year, month), year) // e.g., 04/30/2025
+
         client
             .from("laporan_keuangan")
             .select {
                 filter {
-                    eq("jenis", "Pemasukan")
-                    gte("tanggal", from)
-                    lte("tanggal", to)
+                    and {
+                        eq("jenis", "Pemasukan")
+                        gte("tanggal", from)
+                        lte("tanggal", to)
+                    }
                 }
             }
             .decodeList<RawEntry>()
@@ -80,13 +85,16 @@ class FinancialRepository {
     suspend fun getMonthlyOutcome(year: Int, month: Int): Double = withContext(Dispatchers.IO) {
         val from = String.format("%02d/01/%04d", month, year) // e.g., 04/01/2025
         val to = String.format("%02d/%02d/%04d", month, getLastDayOfMonth(year, month), year) // e.g., 04/30/2025
+
         client
             .from("laporan_keuangan")
             .select {
                 filter {
-                    eq("jenis", "Pengeluaran")
-                    gte("tanggal", from)
-                    lte("tanggal", to)
+                    and {
+                        eq("jenis", "Pengeluaran")
+                        gte("tanggal", from)
+                        lte("tanggal", to)
+                    }
                 }
             }
             .decodeList<RawEntry>()
