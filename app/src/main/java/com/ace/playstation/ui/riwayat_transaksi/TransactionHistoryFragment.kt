@@ -104,12 +104,13 @@ class TransactionHistoryFragment : Fragment() {
     // Helper to get current time filter
     private fun getSelectedTimeFilter(): String {
         return when (binding.spinnerTimeFilter.selectedItemPosition) {
-            0 -> "today"
-            1 -> "week"
-            2 -> "month"
-            3 -> "year"
-            4 -> "custom"
-            else -> "today"
+            0 -> "all"      // "Semua"
+            1 -> "today"    // "Hari Ini"
+            2 -> "week"     // "Minggu Ini"
+            3 -> "month"    // "Bulan Ini"
+            4 -> "year"     // "Tahun Ini"
+            5 -> "custom"   // "Kustom"
+            else -> "all"
         }
     }
 
