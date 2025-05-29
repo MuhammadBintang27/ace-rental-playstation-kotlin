@@ -19,6 +19,7 @@ class FinancialRepository {
         val list = client
             .from("laporan_keuangan")
             .select {
+                order("tanggal", Order.DESCENDING)
                 order("created_at", Order.DESCENDING)
                 limit(1)
             }
@@ -27,7 +28,7 @@ class FinancialRepository {
         if (list.isEmpty()) {
             0.0
         } else {
-            list.first().saldo
+            list.first().saldo.toDouble()
         }
     }
 
