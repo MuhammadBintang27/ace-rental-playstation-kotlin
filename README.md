@@ -75,11 +75,13 @@ cd ace-rental-playstation-kotlin
 - Buat proyek di [Supabase](https://supabase.io/)
 - Dapatkan URL dan API key
 - Tambahkan ke file konfigurasi (misalnya `local.properties`)
+  
 
 ```properties
-SUPABASE_URL=your_supabase_url
+SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_KEY=your_supabase_key
 ```
+- Lebih jelasnya silahkan lihat pada file Supabase.md
 
 ### 3. Instal Dependensi
 
